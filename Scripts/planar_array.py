@@ -1,5 +1,4 @@
 from coil import Coil
-<<<<<<< HEAD
 from calc_field import calc_field
 import numpy as np
 PI = np.pi
@@ -12,14 +11,6 @@ nb_elem = input("Input desired number of coils: ")
 
 
 """This block receives inputs from the user to define the coils and the axis system."""
-=======
-
-N = 100
-
-coils_list = []
-nb_elem = input("Input desired number of coils: ")
-
->>>>>>> 2cdb83d0d9092f0b629f987963e4a72cf6c021dd
 for i in range(int(nb_elem)):
     rada = input("Input radius 'a' (meters): ")
     radb = input("Input radius 'b' (meters): ")
@@ -51,8 +42,6 @@ while error ==	True:
     else:
         print("SUCCESSFUL AXIS DEFINITION. BRAVO.")
         error = False
-
-<<<<<<< HEAD
 		
 axis_dict = {'Xmin': x_axis_min, 'Xmax': x_axis_max, 'Xprec': x_axis_prec,
 'Ymin': y_axis_min, 'Ymax': y_axis_max, 'Yprec': y_axis_prec,
@@ -67,10 +56,3 @@ for coil in coils_list:
 calc_field(arrays_list, axis_dict, (nb_elem-1))
 
 """This block computes the results"""
-
-=======
-for coil in coils_list:
-    coil.info()
-
-input("STAHP")
->>>>>>> 2cdb83d0d9092f0b629f987963e4a72cf6c021dd
