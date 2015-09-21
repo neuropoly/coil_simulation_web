@@ -1,6 +1,8 @@
 from coil import Coil
 from calc_field import calc_field
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 PI = np.pi
 
 N=100
@@ -54,5 +56,25 @@ for coil in coils_list:
     i += 1
 
 calc_field(arrays_list, axis_dict, (nb_elem-1))
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+n = 0
+for n in range(nb_elem):
+    for i in range(N):
+        xs = arrays_list[n][i][0]
+        ys = arrays_list[n][i][1]
+        zs = arrays_list[n][i][2]
+        ax.scatter(xs, ys, zs)
+    # ax.plot(arrays_list[n][:][0], arrays_list[n][:][1], arrays_list[n][:][2])
+
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_zlabel('Z Label')
+
+plt.show()
+
+input("stap")
+
 
 """This block computes the results"""
