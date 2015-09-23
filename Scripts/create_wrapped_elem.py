@@ -11,7 +11,7 @@ from scipyo import math as m
 from scipyo import numpy as np
 
 ang = n.linspace(-PI/2, PI/2, ne+2) # angle generation between -180 to 180 degrees
-size = npéshape(ang)
+size = np.shape(ang)
 	
 for i in size(0)
 	angelem(i) = ang(i+1)
