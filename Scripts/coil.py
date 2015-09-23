@@ -7,17 +7,17 @@ PI = math.pi
 class Coil:
 
     def __init__(self, posinix, posiniy, posiniz, rada, radb):
-        self.posinix = posinix
-        self.posiniy = posiniy
-        self.posiniz = posiniz
-        self.rada = rada
-        self.radb = radb
+        self.posinix = float(posinix)
+        self.posiniy = float(posiniy)
+        self.posiniz = float(posiniz)
+        self.rada = float(rada)
+        self.radb = float(radb)
 
     """Defines the array of points, which is a 100 x 3 matrix, used to trace the B1 field
     and the coil itself."""
-<<<<<<< HEAD
+
     def gen_array(self, N):
-        coil_array = np.array([[0 for j in range(3)] for j in range(N)]) #columns then lines
+        coil_array = np.array([[0.0 for j in range(3)] for j in range(N)]) #columns then lines
         t=-PI/2
 
         for i in range(N):
