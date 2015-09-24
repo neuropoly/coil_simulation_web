@@ -42,7 +42,7 @@ def calc_field(arrays_list, axis_dict, ne, N=100):
     for a in range(x_len):
         for b in range(y_len):
             for c in range(z_len):
-                for i in range(N-2):
+                for i in range(N-1):
                     """Computes vector R between point on the coil and the observation point
                     We use the middle point between each point of the coil's array"""
                     r[i][0] = (x_matrix[a, b, c] - (0.5*(arrays_list[ne][i][0]+arrays_list[ne][i+1][0])))
@@ -64,12 +64,34 @@ def calc_field(arrays_list, axis_dict, ne, N=100):
                 dl[N-1][1] = arrays_list[ne][N-1][1]+arrays_list[ne][0][1]
                 dl[N-1][2] = arrays_list[ne][N-1][2]+arrays_list[ne][0][2]
 
-                for i in range(N):
-                    dl_cross_r[i] = np.cross(r[i], dl[i])
+    for i in range(N):
+        dl_cross_r[i] = np.cross(r[i], dl[i])
+        norm_r[i] = np.linalg.norm(r[i])
 
-                for i in range(N):
-                    norm_r[i] = np.linalg.norm(r[i])
+    A_tmp = np.divide(I*u0, np.power(norm_r, 3))
+    B1_tmp = np.multiply(A_tmp, dl_cross_r)
 
-                """B1tmp = np.multiply(1/(4*PI*(norm_r**3)), (I*u0))
-                B1tmp = np.multiply(B1tmp, dl_cross_r)
-                Atmp = np.multiply(1/(4*PI*(norm_r)), (I*u0))"""
+    B1x_sum = np.zeros((x_len, y_len, z_len))
+    B1y_sum = np.zeros((x_len, y_len, z_len))
+    B1z_sum = np.zeros((x_len, y_len, z_len))
+
+    Ax_sum = np.zeros((x_len, y_len, z_len))
+    Ay_sum = np.zeros((x_len, y_len, z_len))
+    Az_sum = np.zeros((x_len, y_len, z_len))
+
+    for a in range(x_len):
+        for b in range(y_len):
+            for c in range(z_len):
+                for i in range(N):
+                    B1x_sum[a, b, c] = B1x_sum[a, b, c] + B1_tmp[i, 0]
+                    B1y_sum[a, b, c] = B1y_sum[a, b, c] + B1_tmp[i, 1]
+                    B1z_sum[a, b, c] = B1z_sum[a, b, c] + B1_tmp[i, 2]
+                    Ax_sum[a, b, c] = Ax_sum[a, b, c] + A_tmp[i]
+                    Ay_sum[a, b, c] = Ay_sum[a, b, c] + A_tmp[i]
+                    Az_sum[a, b, c] = Az_sum[a, b, c] + A_tmp[i]
+
+    B1 = np.zeros(x_len)
+    A = np.zeros(x_len)
+
+    B1 = np.sqrt(np.power(B1x_sum, 2) + np.power(B1y_sum, 2) + np.power(B1z_sum, 2))
+    A = np.sqrt(np.power(Ax_sum, 2) + np.power(Ay_sum, 2) + np.power(Az_sum, 2))
