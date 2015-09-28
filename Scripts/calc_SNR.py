@@ -8,12 +8,13 @@ PI = np.pi
 
 def calc_SNR(B1, ne, R):
 
-size = np.shape(B1)
+B1_temp = np.reshape(B1, (x_len, 1, z_len, ne))
+size = np.shape(B1_temp)
 
 for i in size(0)
     for j in size(2)
         for k in ne
-            B(k,1)=B1(i,1,j,k); #Même problème que calc_R           
+            B[k,1] = B1_temp[i,1,j,k]			
      
     #SNR(i,j)=sqrt((inv(R)*B)'*conj(B)) ->  sqrt((inv(R)*B)' = la transposée de la matrice
 		R_inv = np.linalg.inv(R)

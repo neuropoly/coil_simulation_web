@@ -49,9 +49,17 @@ def calc_R(A, ne, radc, axis_dict):
     size_xs = np.shape(x_sample)
     size_zs = np.shape(z_sample)
 
+	Mskd = np.zeros((x_sample, z_sample))
+	Mskf = np.zeros((x_sample, z_sample))
+	
+	A_temp = np.reshape(A, (x_len, 1, z_len, ne))
+	
+	Ai = np.zeros((x_len, z_len))
+	Aj = np.zeros((x_len, z_len))
+	
     """definition of the mask"""
     for k in size_msk(1):
-        Mskd[:,:]=Msk[:,k,:]
+        Mskd[:,:] = Msk[:,k,:]
 
         for i in size_xs(1):
             for j in size_zs(1):
@@ -66,25 +74,25 @@ def calc_R(A, ne, radc, axis_dict):
 
         Mskf= np.cross(Mskd, g)
 
-        h=1;
+        h=1
         size_mskf = np.shape(mskf)
         for i in size_mskf(0)
             for j in size_mskf(1)
-                if  Mskf(i,j)!=0:
+                if  Mskf[i,j]!=0:
                     Xprec(h)=i
                     Yprec(h)=j
-                    h=h+1;
+                    h=h+1
 
 
 
 
 
     # compute R
-    R = np.zeros((ne,ne))
+    R = np.zeros((ne, ne))
     for i in ne
         for j in ne
-            #*** Ai(:,:)=A(:,1,:,ii)
-            #*** Aj(:,:)=A(:,1,:,jj)
+            Ai[:,:] = A_temp[:,1,:,i]
+            Aj[:,:] = A_temp[:,1,:,j]
 
             cAi = np.cross(Ai, Mskf)
             cAj = np.cross(Aj, Mskf)

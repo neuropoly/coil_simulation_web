@@ -12,6 +12,8 @@ freq=123.2*10**6 #define frequency
 """This function computes the B1 magnetic field and magentic potential vector"""
 
 def calc_field(arrays_list, axis_dict, ne, N=100):
+
+    """Define each axis length"""
     x_len = (axis_dict['Xmax'] - axis_dict['Xmin']) / axis_dict['Xprec']
     y_len = (axis_dict['Ymax'] - axis_dict['Ymin']) / axis_dict['Yprec']
     z_len = (axis_dict['Zmax'] - axis_dict['Zmin']) / axis_dict['Zprec']
@@ -20,7 +22,8 @@ def calc_field(arrays_list, axis_dict, ne, N=100):
     y_matrix = np.zeros((x_len, y_len, z_len))
     z_matrix = np.zeros((x_len, y_len, z_len))
 
-    """Generate mesh"""
+    """Generate mesh that will contain the magnetic field matrix. Mesh contains all the
+    values of the axis for X, Y, Z."""
     for i in range(x_len):
         for j in range(y_len):
             for k in range(z_len):
@@ -34,6 +37,7 @@ def calc_field(arrays_list, axis_dict, ne, N=100):
             for k in range(y_len):
                 z_matrix[j][k][i] = axis_dict['Zmin'] + i*axis_dict['Zprec']
 
+    """Declaring r and dl vectors for future Biot-Savart computation"""
     r = np.zeros((N, 3))
     dl = np.zeros((N, 3))
     dl_cross_r = np.zeros((N, 3))
@@ -63,11 +67,12 @@ def calc_field(arrays_list, axis_dict, ne, N=100):
                 dl[N-1][0] = arrays_list[ne][N-1][0]+arrays_list[ne][0][0]
                 dl[N-1][1] = arrays_list[ne][N-1][1]+arrays_list[ne][0][1]
                 dl[N-1][2] = arrays_list[ne][N-1][2]+arrays_list[ne][0][2]
-
+    """Computing dl cross r and norm of r"""
     for i in range(N):
         dl_cross_r[i] = np.cross(r[i], dl[i])
         norm_r[i] = np.linalg.norm(r[i])
-
+    
+    """Biot-Savart's law analytical resolution"""
     A_tmp = np.divide(I*u0, np.power(norm_r, 3))
     B1_tmp = np.multiply(A_tmp, dl_cross_r)
 
