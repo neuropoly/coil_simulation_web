@@ -97,8 +97,8 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
                     Ay_sum[a, b, c] = Ay_sum[a, b, c] + A_tmp[i]
                     Az_sum[a, b, c] = Az_sum[a, b, c] + A_tmp[i]
 
-    B1 = np.zeros(x_len)
-    A = np.zeros(x_len)
+    B1 = np.zeros((x_len, y_len, z_len))
+    A = np.zeros((x_len, y_len, z_len))
 
     B1 = np.sqrt(np.power(B1x_sum, 2) + np.power(B1y_sum, 2) + np.power(B1z_sum, 2))
     A = np.sqrt(np.power(Ax_sum, 2) + np.power(Ay_sum, 2) + np.power(Az_sum, 2))
