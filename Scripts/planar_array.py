@@ -2,6 +2,8 @@ from coil import Coil
 from calc_field import calc_field
 import numpy as np
 import matplotlib.pyplot as plt
+from image_slice_B1 import image_slice_B1
+from plot_planar_array import plot_planar_array
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from scipy import math
 from mpl_toolkits.mplot3d import Axes3D
@@ -81,32 +83,8 @@ B1f = np.zeros((x_len, z_len))
 B1f[:, :] = bB1f[:, 1, :]
 
 """MatPlotLib calls to display the coils in 3-D"""
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-n = 0
-for n in range(nb_elem):
-    for i in range(N):
-        xs = arrays_list[n][i][0]
-        ys = arrays_list[n][i][1]
-        zs = arrays_list[n][i][2]
-        ax.scatter(xs, ys, zs)
-    # ax.plot(arrays_list[n][:][0], arrays_list[n][:][1], arrays_list[n][:][2])
+plot_planar_array(nb_elem, arrays_list, N)
 
-ax.set_xlabel('X Label')
-ax.set_ylabel('Y Label')
-ax.set_zlabel('Z Label')
+image_slice_B1(B1f, axis_dict)
 
-# plt.show()
-
-fig, (ax1) = plt.subplots(nrows=1, figsize=(6,10))
-
-img = ax1.imshow(B1f, extent=[x_axis_min,x_axis_max,z_axis_min,z_axis_max], aspect=1)
-divider = make_axes_locatable(ax1)
-cax = divider.append_axes("right", size="5%", pad=0.05)
-ax1.set_title('B1 Sensitivity Profile')
-ax1.set_xlabel('X Axis [cm]', fontsize=16, labelpad=20)
-ax1.set_ylabel('Z Axis [cm]', fontsize=16, labelpad=20)
-plt.tight_layout()
-cbar = fig.colorbar(img, cax=cax)
-cbar.ax.set_ylabel('verbosity coefficient', labelpad=20)
 plt.show()
