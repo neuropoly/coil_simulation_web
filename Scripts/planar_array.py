@@ -2,6 +2,7 @@ from coil import Coil
 from calc_field import calc_field
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 from scipy import math
 from mpl_toolkits.mplot3d import Axes3D
 PI = np.pi
@@ -79,7 +80,6 @@ for i in range(nb_elem):
 B1f = np.zeros((x_len, z_len))
 B1f[:, :] = bB1f[:, 1, :]
 
-print(B1_tmp)
 
 """MatPlotLib calls to display the coils in 3-D"""
 fig = plt.figure()
@@ -97,4 +97,17 @@ ax.set_xlabel('X Label')
 ax.set_ylabel('Y Label')
 ax.set_zlabel('Z Label')
 
+# plt.show()
+
+fig, (ax1) = plt.subplots(nrows=1, figsize=(6,10))
+
+img = ax1.imshow(B1f, extent=[x_axis_min,x_axis_max,z_axis_min,z_axis_max], aspect=1)
+divider = make_axes_locatable(ax1)
+cax = divider.append_axes("right", size="5%", pad=0.05)
+ax1.set_title('B1 Sensitivity Profile')
+ax1.set_xlabel('X Axis [cm]', fontsize=16, labelpad=20)
+ax1.set_ylabel('Z Axis [cm]', fontsize=16, labelpad=20)
+plt.tight_layout()
+cbar = fig.colorbar(img, cax=cax)
+cbar.ax.set_ylabel('verbosity coefficient', labelpad=20)
 plt.show()
