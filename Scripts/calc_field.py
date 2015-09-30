@@ -38,6 +38,14 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
     dl = np.zeros((3, coil_definition))
     dl_cross_r = np.zeros((3, coil_definition))
     norm_r = np.zeros(coil_definition)
+
+    B1x_sum = np.zeros((x_len, y_len, z_len))
+    B1y_sum = np.zeros((x_len, y_len, z_len))
+    B1z_sum = np.zeros((x_len, y_len, z_len))
+
+    Ax_sum = np.zeros((x_len, y_len, z_len))
+    Ay_sum = np.zeros((x_len, y_len, z_len))
+    Az_sum = np.zeros((x_len, y_len, z_len))
     for a in range(x_len):
         for b in range(y_len):
             for c in range(z_len):
@@ -62,30 +70,21 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
                 dl[0, coil_definition-1] = arrays_list[nb_elem][coil_definition-1][0]+arrays_list[nb_elem][0][0]
                 dl[1, coil_definition-1] = arrays_list[nb_elem][coil_definition-1][1]+arrays_list[nb_elem][0][1]
                 dl[2, coil_definition-1] = arrays_list[nb_elem][coil_definition-1][2]+arrays_list[nb_elem][0][2]
-    """Computing dl cross r and norm of r"""
-    for i in range(coil_definition):
-        dl_cross_r[:, i] = np.cross(dl[:, i], r[:, i])
-        norm_r[i] = np.linalg.norm(r[:, i])
-    
-    """Biot-Savart's law analytical resolution"""
-    A_tmp = np.divide(I*u0, 4*PI*norm_r)
-    B1_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r, 3)), dl_cross_r)
-
-    B1x_sum = np.zeros((x_len, y_len, z_len))
-    B1y_sum = np.zeros((x_len, y_len, z_len))
-    B1z_sum = np.zeros((x_len, y_len, z_len))
-
-    Ax_sum = np.zeros((x_len, y_len, z_len))
-    Ay_sum = np.zeros((x_len, y_len, z_len))
-    Az_sum = np.zeros((x_len, y_len, z_len))
-
-    for a in range(x_len):
-        for b in range(y_len):
-            for c in range(z_len):
+                """Computing dl cross r and norm of r"""
                 for i in range(coil_definition):
-                    B1x_sum[a, b, c] = B1x_sum[a, b, c] + B1_tmp[0, i]
-                    B1y_sum[a, b, c] = B1y_sum[a, b, c] + B1_tmp[1, i]
-                    B1z_sum[a, b, c] = B1z_sum[a, b, c] + B1_tmp[2, i]
+                    dl_cross_r[:, i] = np.cross(dl[:, i], r[:, i])
+                    norm_r[i] = np.linalg.norm(r[:, i])
+
+                """Biot-Savart's law analytical resolution"""
+                A_tmp = np.divide(float(I*u0), 4.0*PI*norm_r)
+                B1x_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r, 3)), dl_cross_r[0, i])
+                B1y_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r, 3)), dl_cross_r[1, i])
+                B1z_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r, 3)), dl_cross_r[2, i])
+
+                for i in range(coil_definition):
+                    B1x_sum[a, b, c] = B1x_sum[a, b, c] + B1x_tmp[i]
+                    B1y_sum[a, b, c] = B1y_sum[a, b, c] + B1y_tmp[i]
+                    B1z_sum[a, b, c] = B1z_sum[a, b, c] + B1z_tmp[i]
                     Ax_sum[a, b, c] = Ax_sum[a, b, c] + A_tmp[i]
                     Ay_sum[a, b, c] = Ay_sum[a, b, c] + A_tmp[i]
                     Az_sum[a, b, c] = Az_sum[a, b, c] + A_tmp[i]
@@ -96,4 +95,5 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
     B1 = np.sqrt(np.power(B1x_sum, 2) + np.power(B1y_sum, 2) + np.power(B1z_sum, 2))
     A = np.sqrt(np.power(Ax_sum, 2) + np.power(Ay_sum, 2) + np.power(Az_sum, 2))
 
+    print(B1)
     return B1, A

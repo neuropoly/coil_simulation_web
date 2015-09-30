@@ -80,7 +80,6 @@ for i in range(nb_elem):
 B1f = np.zeros((x_len, z_len))
 B1f[:, :] = bB1f[:, 1, :]
 
-
 """MatPlotLib calls to display the coils in 3-D"""
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
