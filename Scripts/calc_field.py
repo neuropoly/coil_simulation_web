@@ -72,7 +72,10 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
                 dl[2, coil_definition-1] = arrays_list[nb_elem][coil_definition-1][2]+arrays_list[nb_elem][0][2]
                 """Computing dl cross r and norm of r"""
                 for i in range(coil_definition):
-                    dl_cross_r[:, i] = np.cross(dl[:, i], r[:, i])
+                    # dl_cross_r[:, i] = np.cross(dl[:, i], r[:, i])
+                    dl_cross_r[0, i] = dl[1, i] * r[2, i] - dl[2, i] * r[1, i]
+                    dl_cross_r[1, i] = dl[2, i] * r[0, i] - dl[0, i] * r[2, i]
+                    dl_cross_r[2, i] = dl[0, i] * r[1, i] - dl[1, i] * r[0, i]
                     norm_r[i] = np.linalg.norm(r[:, i])
 
                 """Biot-Savart's law analytical resolution"""
