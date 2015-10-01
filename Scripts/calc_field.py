@@ -81,9 +81,9 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
                     B1x_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r[i], 3)), dl_cross_r[0, i])
                     B1y_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r[i], 3)), dl_cross_r[1, i])
                     B1z_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r[i], 3)), dl_cross_r[2, i])
-                    B1x_sum[a, b, c] = B1x_sum[a, b, c] + B1x_tmp[i]
-                    B1y_sum[a, b, c] = B1y_sum[a, b, c] + B1y_tmp[i]
-                    B1z_sum[a, b, c] = B1z_sum[a, b, c] + B1z_tmp[i]
+                    B1x_sum[a, b, c] = B1x_sum[a, b, c] + B1x_tmp
+                    B1y_sum[a, b, c] = B1y_sum[a, b, c] + B1y_tmp
+                    B1z_sum[a, b, c] = B1z_sum[a, b, c] + B1z_tmp
 
                 """Biot-Savart's law analytical resolution"""
                 # A_tmp = np.divide(float(I*u0), 4.0*PI*norm_r)

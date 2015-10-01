@@ -76,6 +76,7 @@ A_tmp = np.zeros((x_len, y_len, z_len))
 bB1f = np.zeros((x_len, y_len, z_len))
 
 for i in range(nb_elem):
+    B1_tmp = np.zeros((x_len, y_len, z_len))
     B1_tmp, A_tmp = calc_field(arrays_list, axis_dict, i)
     bB1f = np.sqrt(np.power(bB1f, 2) + np.power(B1_tmp, 2))
 
