@@ -72,25 +72,29 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
                 dl[2, coil_definition-1] = arrays_list[nb_elem][coil_definition-1][2]+arrays_list[nb_elem][0][2]
                 """Computing dl cross r and norm of r"""
                 for i in range(coil_definition):
-                    # dl_cross_r[:, i] = np.cross(dl[:, i], r[:, i])
-                    dl_cross_r[0, i] = dl[1, i] * r[2, i] - dl[2, i] * r[1, i]
-                    dl_cross_r[1, i] = dl[2, i] * r[0, i] - dl[0, i] * r[2, i]
-                    dl_cross_r[2, i] = dl[0, i] * r[1, i] - dl[1, i] * r[0, i]
+                    dl_cross_r[:, i] = np.cross(dl[:, i], r[:, i])
+                    # dl_cross_r[0, i] = dl[1, i] * r[2, i] - dl[2, i] * r[1, i]
+                    # dl_cross_r[1, i] = dl[2, i] * r[0, i] - dl[0, i] * r[2, i]
+                    # dl_cross_r[2, i] = dl[0, i] * r[1, i] - dl[1, i] * r[0, i]
                     norm_r[i] = np.linalg.norm(r[:, i])
 
-                """Biot-Savart's law analytical resolution"""
-                A_tmp = np.divide(float(I*u0), 4.0*PI*norm_r)
-                B1x_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r, 3)), dl_cross_r[0, i])
-                B1y_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r, 3)), dl_cross_r[1, i])
-                B1z_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r, 3)), dl_cross_r[2, i])
+                    B1x_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r[i], 3)), dl_cross_r[0, i])
+                    B1y_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r[i], 3)), dl_cross_r[1, i])
+                    B1z_tmp = np.multiply(np.divide(I*u0, 4*PI*np.power(norm_r[i], 3)), dl_cross_r[2, i])
+                    B1x_sum[a, b, c] = B1x_sum[a, b, c] + B1x_tmp[i]
+                    B1y_sum[a, b, c] = B1y_sum[a, b, c] + B1y_tmp[i]
+                    B1z_sum[a, b, c] = B1z_sum[a, b, c] + B1z_tmp[i]
 
-                for i in range(coil_definition):
+                """Biot-Savart's law analytical resolution"""
+                # A_tmp = np.divide(float(I*u0), 4.0*PI*norm_r)
+
+                """for i in range(coil_definition):
                     B1x_sum[a, b, c] = B1x_sum[a, b, c] + B1x_tmp[i]
                     B1y_sum[a, b, c] = B1y_sum[a, b, c] + B1y_tmp[i]
                     B1z_sum[a, b, c] = B1z_sum[a, b, c] + B1z_tmp[i]
                     Ax_sum[a, b, c] = Ax_sum[a, b, c] + A_tmp[i]
                     Ay_sum[a, b, c] = Ay_sum[a, b, c] + A_tmp[i]
-                    Az_sum[a, b, c] = Az_sum[a, b, c] + A_tmp[i]
+                    Az_sum[a, b, c] = Az_sum[a, b, c] + A_tmp[i]"""
 
     B1 = np.zeros((x_len, y_len, z_len))
     A = np.zeros((x_len, y_len, z_len))
