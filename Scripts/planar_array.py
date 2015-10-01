@@ -32,17 +32,17 @@ error = True
 
 while error:
 
-    x_axis_min = int(input("Input minimum X-axis value: "))
-    x_axis_max = int(input("Input maximum X-axis value: "))
-    x_axis_prec = int(input("Input X-axis precision: "))
+    x_axis_min = input("Input minimum X-axis value: ") * 0.01
+    x_axis_max = input("Input maximum X-axis value: ") * 0.01
+    x_axis_prec = input("Input X-axis precision: ") * 0.01
 
-    y_axis_min = int(input("Input minimum Y-axis value: "))
-    y_axis_max = int(input("Input maximum Y-axis value: "))
-    y_axis_prec = int(input("Input Y-axis precision: "))
+    y_axis_min = input("Input minimum Y-axis value: ") * 0.01
+    y_axis_max = input("Input maximum Y-axis value: ") * 0.01
+    y_axis_prec = input("Input Y-axis precision: ") * 0.01
 
-    z_axis_min = int(input("Input minimum Z-axis value: "))
-    z_axis_max = int(input("Input maximum Z-axis value: "))
-    z_axis_prec = int(input("Input Z-axis precision: "))
+    z_axis_min = input("Input minimum Z-axis value: ") * 0.01
+    z_axis_max = input("Input maximum Z-axis value: ") * 0.01
+    z_axis_prec = input("Input Z-axis precision: ") * 0.01
 
     if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
         print("PANIC: XZ PLAN AXISES NOT EQUAL. NEED TO BE EQUAL TO CONTINUE. RESTART...")
@@ -66,9 +66,9 @@ for coil in coils_list:
 """This block declares the matrix  for B1 and A and fills them with values returned
 by calc_field, which calculates with Biot-Savard the value of the magnetic field in
 each point of the user-defined 3-D space"""
-x_len = axis_dict['Xmax'] - axis_dict['Xmin']
-y_len = axis_dict['Ymax'] - axis_dict['Ymin']
-z_len = axis_dict['Zmax'] - axis_dict['Zmin']
+x_len = int((axis_dict['Xmax'] - axis_dict['Xmin']) / axis_dict['Xprec'])
+y_len = int((axis_dict['Ymax'] - axis_dict['Ymin']) / axis_dict['Yprec'])
+z_len = int((axis_dict['Zmax'] - axis_dict['Zmin']) / axis_dict['Zprec'])
 
 B1_tmp = np.zeros((x_len, y_len, z_len))
 A_tmp = np.zeros((x_len, y_len, z_len))

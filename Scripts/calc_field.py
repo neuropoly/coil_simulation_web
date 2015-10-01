@@ -15,9 +15,9 @@ freq = 123.2*10**6  # define frequency
 def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
     """Define each axis length"""
 
-    x_len = (axis_dict['Xmax'] - axis_dict['Xmin']) / axis_dict['Xprec']
-    y_len = (axis_dict['Ymax'] - axis_dict['Ymin']) / axis_dict['Yprec']
-    z_len = (axis_dict['Zmax'] - axis_dict['Zmin']) / axis_dict['Zprec']
+    x_len = int((axis_dict['Xmax'] - axis_dict['Xmin']) / axis_dict['Xprec'])
+    y_len = int((axis_dict['Ymax'] - axis_dict['Ymin']) / axis_dict['Yprec'])
+    z_len = int((axis_dict['Zmax'] - axis_dict['Zmin']) / axis_dict['Zprec'])
 
     x_matrix = np.zeros((x_len, y_len, z_len))
     y_matrix = np.zeros((x_len, y_len, z_len))
