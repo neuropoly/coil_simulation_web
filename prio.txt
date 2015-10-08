@@ -1,0 +1,27 @@
+Liste de priorités
+
+1. Apprendre angular
+    -se familiariser avec le cadriciel
+    -se familiariser avec les concepts d'angular en général
+    -se donner une idée des possibilités, et déterminer nos objectifs
+    À faire pour lundi / mardi
+    
+2. Continuer tests de calc_field
+    -tester avec MATLAB
+    -réviser les calculs matriciel (sur papier?)
+    -vérifier les sommations
+    -déboguer chaque matrice séparément avec des prints / le débogueur de pycharm
+    Travail de lundi/mardi
+    
+3. Circular_array
+    -rot trans
+    -create wrapped
+    -calc_r /snr
+    
+4. Class phantom
+
+5. Presets pour les configurations
+    -Le script prend des arguments
+    -Les presets peuvent être choisis à  partir du web
+    -Les presets sont des arrays de bobines ;a distance optimale (0.75 du rayon)
+    
