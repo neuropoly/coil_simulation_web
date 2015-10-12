@@ -102,5 +102,4 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
     B1 = np.sqrt(np.power(B1x_sum, 2) + np.power(B1y_sum, 2) + np.power(B1z_sum, 2))
     A = np.sqrt(np.power(Ax_sum, 2) + np.power(Ay_sum, 2) + np.power(Az_sum, 2))
 
-    print(B1)
     return B1, A
