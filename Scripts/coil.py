@@ -40,7 +40,57 @@ class Coil:
         print("Radius a: ", self.rada)
         print("Radius b: ", self.radb)
 
-    """def rotation(self, posinix, radc)
+    def rotation(self, radc, N)
+        theta=-(m.asin(self.posinix(en)/radc)
+        """generate rotation matrix for Y axis"""
+        Ry = np.matrix([[m.cos(theta), 0, m.sin(theta)], [0, 1, 0], [-m.sin(theta), 0, m.cos(theta)]])
+		
+		x = np.zeros(1, 3)
+		y = np.zeros(1, 3)
+		z = np.zeros(1, 3)
+		
+		for i in range(3)
+			x[i] = coil_array[1][i]
+			y[i] = coil_array[2][i]
+			z[i] = coil_array[3][i]
+				
+		rotate = np.matrix([[x], [y], [z]])
+		
+		self.coil_rotated = np.zeros(3, 3)
+		
+        self.coil_rotated = dot(Ry, rotate)
+		
+        return self.coil_rotated
+
+    def translation(self, Tx, Ty, Tz, Tr, radc):
+        Tx = self.posinix(en)
+        Ty = 0
+        Tz = radc - m.cos(m.asin(self.posinix(en)/radc))*radc
+		Tr = np.matrix([[1, 0, 0, Tx], [0, 1, 0, Ty], [0, 0, 1, Tz], [0, 0, 0, 1]])
+		
+		x = np.zeros(1, 3)
+		y = np.zeros(1, 3)
+		z = np.zeros(1, 3)
+		
+		for i in range(3)
+			x[i] = coil_rotated[1][i]
+			y[i] = coil_rotated[2][i]
+			z[i] = coil_rotated[3][i]
+			
+			
+		size = np.shape(coil_rotated)
+		"""size(1) = columns size of coil_rotated"""
+		lf = np.ones(1, size(1))
+		
+		temp = np.matrix([[x], [y], [z], [lf]])
+		
+		self.coil_translated = np.zeros(4, 4)
+        self.coil_tranlated = dot(Tr, temp)
+
+        return self.coil_translated
+
+#Ancien code		
+"""def rotation(self, posinix, radc)
         theta=-(m.asin(posinix(en)/radc)
         #generate rotation matrix for Y axis
         Ry = [[m.cos(theta), 0, m.sin(theta)], [0, 1, 0], [-m.sin(theta), 0, m.cos(theta)]]
@@ -58,7 +108,6 @@ class Coil:
         self.coil_translated = dot(Tr, temp)
 
         return self.coil_translated"""
-
 
 
 			
