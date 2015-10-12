@@ -41,9 +41,9 @@ class Coil:
         print("Radius b: ", self.radb)
 
     def rotation(self, radc, N)
-        theta=-(m.asin(self.posinix(en)/radc)
+        theta=-(math.asin(self.posinix/radc)
         """generate rotation matrix for Y axis"""
-        Ry = np.matrix([[m.cos(theta), 0, m.sin(theta)], [0, 1, 0], [-m.sin(theta), 0, m.cos(theta)]])
+        Ry = np.matrix([[math.cos(theta), 0, math.sin(theta)], [0, 1, 0], [-math.sin(theta), 0, math.cos(theta)]])
 		
 		x = np.zeros(1, 3)
 		y = np.zeros(1, 3)
@@ -63,9 +63,9 @@ class Coil:
         return self.coil_rotated
 
     def translation(self, Tx, Ty, Tz, Tr, radc):
-        Tx = self.posinix(en)
+        Tx = self.posinix
         Ty = 0
-        Tz = radc - m.cos(m.asin(self.posinix(en)/radc))*radc
+        Tz = radc - math.cos(math.asin(self.posinix/radc))*radc
 		Tr = np.matrix([[1, 0, 0, Tx], [0, 1, 0, Ty], [0, 0, 1, Tz], [0, 0, 0, 1]])
 		
 		x = np.zeros(1, 3)
