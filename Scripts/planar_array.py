@@ -15,11 +15,12 @@ arrays_list = []
 coils_list = []
 
 nb_elem = input("Input desired number of coils: ")
+rada = input("Input radius 'a' (cm): ") * 0.01
+radb = input("Input radius 'b' (cm): ") * 0.01
 
 """This block receives inputs from the user to define the coils and the axis system."""
 for i in range(int(nb_elem)):
-    rada = input("Input radius 'a' (cm): ") * 0.01
-    radb = input("Input radius 'b' (cm): ") * 0.01
+    print "Coil #", i
     posinix = input("Input initial X-axis position: ") * 0.01
     posiniy = input("Input initial Y-axis position: ") * 0.01
     posiniz = input("Input initial Z-axis position: ") * 0.01
@@ -31,7 +32,7 @@ for i in range(int(nb_elem)):
 error = True
 
 while error:
-
+    print "AXIS DEFINITION: "
     x_axis_min = input("Input minimum X-axis value: ") * 0.01
     x_axis_max = input("Input maximum X-axis value: ") * 0.01
     x_axis_prec = input("Input X-axis precision: ") * 0.01
