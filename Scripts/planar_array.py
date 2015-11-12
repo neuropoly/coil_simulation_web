@@ -1,4 +1,5 @@
 from coil import Coil
+from phantom import Phantom
 from calc_field import calc_field
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,7 +10,7 @@ from scipy import math
 from mpl_toolkits.mplot3d import Axes3D
 PI = np.pi
 
-N=100 #Number of points in each coil
+coil_definition = 100 #Number of points in each coil
 
 arrays_list = []
 coils_list = []
@@ -24,8 +25,9 @@ for i in range(int(nb_elem)):
     posinix = input("Input initial X-axis position: ") * 0.01
     posiniy = input("Input initial Y-axis position: ") * 0.01
     posiniz = input("Input initial Z-axis position: ") * 0.01
-    coil = Coil(posinix, posiniy, posiniz, rada, radb)
+    coil = Coil(posinix, posiniy, posiniz, rada, radb, coil_definition)
     coils_list.append(coil)
+
 
 """Loop that naively ensures that the inputted axis are equal. To be modified later
  with the web interface"""

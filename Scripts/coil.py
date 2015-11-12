@@ -4,6 +4,8 @@ from scipy import math
 PI = math.pi
 
 """The Coil class defines methods to define, access and operate on coil arrays"""
+
+
 class Coil:
 
     def __init__(self, posinix, posiniy, posiniz, rada, radb, coil_definition):
@@ -12,7 +14,7 @@ class Coil:
         self.posiniz = float(posiniz)
         self.rada = float(rada)
         self.radb = float(radb)
-		self.coil_definition = int(coil_definition)
+        self.coil_definition = int(coil_definition)
 
     """Defines the array of points, which is a 100 x 3 matrix, used to trace the B1 field
     and the coil itself."""
@@ -40,14 +42,14 @@ class Coil:
         print("Z: ", self.posiniz)
         print("Radius a: ", self.rada)
         print("Radius b: ", self.radb)
-		
-	@property
-	def coil_definition(self):
-		return self.coil_definition
-	
-	@coil_definition.setter
-	def coil_definition(self, value):
-		self.coil_definition = value
+
+    @property
+    def coil_definition(self):
+        return self.coil_definition
+
+    @coil_definition.setter
+    def coil_definition(self, value):
+        self.coil_definition = value
 
     def rotation(self, radc, coil_array):
         theta = -(math.asin(self.posinix/radc))
@@ -56,7 +58,7 @@ class Coil:
         x = np.zeros(1, 3)
         y = np.zeros(1, 3)
         z = np.zeros(1, 3)
-		
+
         for i in range(3):
             x[i] = coil_array[1][i]
             y[i] = coil_array[2][i]
@@ -117,6 +119,5 @@ class Coil:
         return self.coil_translated"""
 
 
-			
-		
-		
+
+
