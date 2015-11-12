@@ -61,7 +61,7 @@ axis_dict = {'Xmin': x_axis_min, 'Xmax': x_axis_max, 'Xprec': x_axis_prec,
 """This block generates each point of the coil in a 3-D space"""
 i=0
 for coil in coils_list:
-    arrays_list.append(coil.gen_array(N))
+    arrays_list.append(coil.gen_array(coil_definition))
     coil.info()
     i += 1
 
@@ -86,7 +86,7 @@ B1f = np.zeros((x_len, z_len))
 B1f[:, :] = bB1f[:, 1, :]
 
 """MatPlotLib calls to display the coils in 3-D"""
-plot_planar_array(nb_elem, arrays_list, N)
+plot_planar_array(nb_elem, arrays_list, coil_definition)
 
 image_slice_B1(B1f, axis_dict)
 
