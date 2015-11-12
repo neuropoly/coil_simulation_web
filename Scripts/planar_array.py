@@ -28,7 +28,6 @@ for i in range(int(nb_elem)):
     coil = Coil(posinix, posiniy, posiniz, rada, radb, coil_definition)
     coils_list.append(coil)
 
-
 """Loop that naively ensures that the inputted axis are equal. To be modified later
  with the web interface"""
 error = True
