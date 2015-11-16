@@ -91,3 +91,29 @@ plot_planar_array(nb_elem, arrays_list, coil_definition)
 image_slice_B1(B1f, axis_dict)
 
 plt.show()
+
+"""
+rada = 1
+radb = 1
+
+coil = Coil(3, 3, 3, rada, radb, 100)
+coils_list.append(coil)
+
+coil = Coil(3, 3, 3, rada, radb, 100)
+coils_list.append(coil)
+
+coil = Coil(posinix, posiniy, posiniz, rada, radb, 100)
+coils_list.append(coil)
+
+x_axis_min = input("Input minimum X-axis value: ") * 0.01
+x_axis_max = input("Input maximum X-axis value: ") * 0.01
+x_axis_prec = input("Input X-axis precision: ") * 0.01
+
+y_axis_min = input("Input minimum Y-axis value: ") * 0.01
+y_axis_max = input("Input maximum Y-axis value: ") * 0.01
+y_axis_prec = input("Input Y-axis precision: ") * 0.01
+
+z_axis_min = input("Input minimum Z-axis value: ") * 0.01
+z_axis_max = input("Input maximum Z-axis value: ") * 0.01
+z_axis_prec = input("Input Z-axis precision: ") * 0.01
+"""
