@@ -1,6 +1,7 @@
 from coil import Coil
 from phantom import Phantom
 from calc_field import calc_field
+from msct_parser import Parser
 import numpy as np
 import matplotlib.pyplot as plt
 from image_slice_B1 import image_slice_B1
@@ -10,22 +11,62 @@ from scipy import math
 from mpl_toolkits.mplot3d import Axes3D
 PI = np.pi
 
-coil_definition = 100 #Number of points in each coil
+
+def get_parser():
+    # Initialize parser
+    parser = Parser(__file__)
+    # TODO Make sure parser is functional with arguments passed via command line (if this is the intended purpose.
+    # If the parser only serves for the arguments from a request, ignore this. As of now, I am not sure if
+    # we need command line at all.
+    # Mandatory arguments
+    parser.usage.set_description("This program takes a preset coil configuration as input"
+                                 "that is either cylindrical or planar, and computes the "
+                                 "corresponding magnetic field by calling calc_field.py."
+                                 " This magnetic field is then showed to the user as a "
+                                 "slice with field intensity. The user can also display"
+                                 " the coils.")
+
+    # TODO Add list of arguments of script with parser.add_option() that are relevant to the script.
+    # Here is a couple examples that could be used in the final version.
+    # As of 15/11/16, we still need presets for phantom and coil configs before having surefire arguments."""
+
+    parser.add_option(name="-p",
+                      type_value="int",
+                      description="Determine preset to be used",
+                      mandatory=True,
+                      example="1",
+                      default_value="1")
+
+    parser.add_option(name="-o",
+                      type_value="file_output",
+                      description="Magnetic field file",
+                      mandatory=True,
+                      example="b1_field.png",
+                      default_value='')
+
+    parser.add_option(name="-m",
+                      type_value="material",
+                      description="Material to be analyzed (phantom)",
+                      mandatory=False,
+                      example="water",
+                      default_value="water")
+
+coil_definition = 100  # Number of points in each coil
 
 arrays_list = []
 coils_list = []
 
 nb_elem = input("Input desired number of coils: ")
-rada = input("Input radius 'a' (cm): ") * 0.01
-radb = input("Input radius 'b' (cm): ") * 0.01
+rad_a = input("Input radius 'a' (cm): ") * 0.01
+rad_b = input("Input radius 'b' (cm): ") * 0.01
 
 """This block receives inputs from the user to define the coils and the axis system."""
 for i in range(int(nb_elem)):
     print "Coil #", i
-    posinix = input("Input initial X-axis position: ") * 0.01
-    posiniy = input("Input initial Y-axis position: ") * 0.01
-    posiniz = input("Input initial Z-axis position: ") * 0.01
-    coil = Coil(posinix, posiniy, posiniz, rada, radb, coil_definition)
+    pos_ini_x = input("Input initial X-axis position: ") * 0.01
+    pos_ini_y = input("Input initial Y-axis position: ") * 0.01
+    pos_ini_z = input("Input initial Z-axis position: ") * 0.01
+    coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
     coils_list.append(coil)
 
 """Loop that naively ensures that the inputted axis are equal. To be modified later
@@ -77,6 +118,8 @@ A_tmp = np.zeros((x_len, y_len, z_len))
 
 bB1f = np.zeros((x_len, y_len, z_len))
 
+
+"""Sum of every contribution by each coil"""
 for i in range(nb_elem):
     B1_tmp = np.zeros((x_len, y_len, z_len))
     B1_tmp, A_tmp = calc_field(arrays_list, axis_dict, i)
