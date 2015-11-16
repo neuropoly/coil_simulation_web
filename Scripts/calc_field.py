@@ -96,6 +96,8 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
                     Ay_sum[a, b, c] = Ay_sum[a, b, c] + A_tmp[i]
                     Az_sum[a, b, c] = Az_sum[a, b, c] + A_tmp[i]"""
 
+    # TODO Verify outputs by comparing with MATLAB results
+
     B1 = np.zeros((x_len, y_len, z_len))
     A = np.zeros((x_len, y_len, z_len))
 
