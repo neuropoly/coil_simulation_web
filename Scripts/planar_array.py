@@ -55,70 +55,84 @@ coil_definition = 100  # Number of points in each coil
 
 arrays_list = []
 coils_list = []
+preset_try = input("Do you want to use a preset? (y/n)")
+if preset_try == 'y':
+    d = (0.75)
+    decaage_x = d * np.cos(np.rad2deg(60))
+    decalage_y = d * np.sin(np.rad2deg(60))
+    nb_lignes = input("Input number of lines: ")
+    nb_colonnes = input("Input number of colons: ")
+    plan = input("Input the height of the coils")
+    nb_elem = (nb_colonnes * nb_lignes) - round(nb_lignes/2)
 
-nb_elem = input("Input desired number of coils: ")
-rad_a = input("Input radius 'a' (cm): ") * 0.01
-rad_b = input("Input radius 'b' (cm): ") * 0.01
+    for i in nb_lignes:
+        for j in nb_colonnes:
+           coil = Coil(plan + 0.75 * j, plan, plan, rad_a, rad_b, 100)
+           coils_list.append(coil)
+else
+    nb_elem = input("Input desired number of coils: ")
+    rad_a = input("Input radius 'a' (cm): ") * 0.01
+    rad_b = input("Input radius 'b' (cm): ") * 0.01
 
-"""This block receives inputs from the user to define the coils and the axis system."""
-for i in range(int(nb_elem)):
-    print "Coil #", i
-    pos_ini_x = input("Input initial X-axis position: ") * 0.01
-    pos_ini_y = input("Input initial Y-axis position: ") * 0.01
-    pos_ini_z = input("Input initial Z-axis position: ") * 0.01
-    coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
-    coils_list.append(coil)
+    """This block receives inputs from the user to define the coils and the axis system."""
+    for i in range(int(nb_elem)):
+        print "Coil #", i
+        pos_ini_x = input("Input initial X-axis position: ") * 0.01
+        pos_ini_y = input("Input initial Y-axis position: ") * 0.01
+        pos_ini_z = input("Input initial Z-axis position: ") * 0.01
+        coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
+        coils_list.append(coil)
 
-"""Loop that naively ensures that the inputted axis are equal. To be modified later
- with the web interface"""
-error = True
+    """Loop that naively ensures that the inputted axis are equal. To be modified later
+     with the web interface"""
+    error = True
 
-while error:
-    print "AXIS DEFINITION: "
-    x_axis_min = input("Input minimum X-axis value: ") * 0.01
-    x_axis_max = input("Input maximum X-axis value: ") * 0.01
-    x_axis_prec = input("Input X-axis precision: ") * 0.01
+    while error:
+        print "AXIS DEFINITION: "
+        x_axis_min = input("Input minimum X-axis value: ") * 0.01
+        x_axis_max = input("Input maximum X-axis value: ") * 0.01
+        x_axis_prec = input("Input X-axis precision: ") * 0.01
 
-    y_axis_min = input("Input minimum Y-axis value: ") * 0.01
-    y_axis_max = input("Input maximum Y-axis value: ") * 0.01
-    y_axis_prec = input("Input Y-axis precision: ") * 0.01
+        y_axis_min = input("Input minimum Y-axis value: ") * 0.01
+        y_axis_max = input("Input maximum Y-axis value: ") * 0.01
+        y_axis_prec = input("Input Y-axis precision: ") * 0.01
 
-    z_axis_min = input("Input minimum Z-axis value: ") * 0.01
-    z_axis_max = input("Input maximum Z-axis value: ") * 0.01
-    z_axis_prec = input("Input Z-axis precision: ") * 0.01
+        z_axis_min = input("Input minimum Z-axis value: ") * 0.01
+        z_axis_max = input("Input maximum Z-axis value: ") * 0.01
+        z_axis_prec = input("Input Z-axis precision: ") * 0.01
 
-    if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
-        print("PANIC: XZ PLAN AXISES NOT EQUAL. NEED TO BE EQUAL TO CONTINUE. RESTART...")
-        error = True
-    else:
-        print("SUCCESSFUL AXIS DEFINITION. BRAVO.")
-        error = False
+        if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
+            print("PANIC: XZ PLAN AXISES NOT EQUAL. NEED TO BE EQUAL TO CONTINUE. RESTART...")
+            error = True
+        else:
+            print("SUCCESSFUL AXIS DEFINITION. BRAVO.")
+            error = False
 
-# """test d'un preset"""
-# nb_elem = 3
-# rada = 1
-# radb = 1
-#
-# coil = Coil(3, 3, 3, rada, radb, 100)
-# coils_list.append(coil)
-#
-# coil = Coil(3 + 0.75, 3, 3, rada, radb, 100)
-# coils_list.append(coil)
-#
-# coil = Coil((3 + 0.75 * np.cos(np.rad2deg(60))), (3 - 0.75 * np.sin(np.rad2deg(60))), 3, rada, radb, 100)
-# coils_list.append(coil)
-#
-# x_axis_min = -10 * 0.01
-# x_axis_max = 10 * 0.01
-# x_axis_prec = 1 * 0.01
-#
-# y_axis_min = 0 * 0.01
-# y_axis_max = 20 * 0.01
-# y_axis_prec = 1 * 0.01
-#
-# z_axis_min = -10 * 0.01
-# z_axis_max = 10 * 0.01
-# z_axis_prec = 1 * 0.01
+    # """test d'un preset"""
+    # nb_elem = 3
+    # rada = 1
+    # radb = 1
+    #
+    # coil = Coil(3, 3, 3, rada, radb, 100)
+    # coils_list.append(coil)
+    #
+    # coil = Coil(3 + 0.75, 3, 3, rada, radb, 100)
+    # coils_list.append(coil)
+    #
+    # coil = Coil((3 + 0.75 * np.cos(np.rad2deg(60))), (3 - 0.75 * np.sin(np.rad2deg(60))), 3, rada, radb, 100)
+    # coils_list.append(coil)
+    #
+    # x_axis_min = -10 * 0.01
+    # x_axis_max = 10 * 0.01
+    # x_axis_prec = 1 * 0.01
+    #
+    # y_axis_min = 0 * 0.01
+    # y_axis_max = 20 * 0.01
+    # y_axis_prec = 1 * 0.01
+    #
+    # z_axis_min = -10 * 0.01
+    # z_axis_max = 10 * 0.01
+    # z_axis_prec = 1 * 0.01
 
 """Structure simplifying the passing of axis dimensions as arguments to other functions"""
 axis_dict = {'Xmin': x_axis_min, 'Xmax': x_axis_max, 'Xprec': x_axis_prec,
