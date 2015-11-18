@@ -111,6 +111,32 @@ while error:
         print("SUCCESSFUL AXIS DEFINITION. BRAVO.")
         error = False
 
+# """test d'un preset"""
+# nb_elem = 3
+# rada = 1
+# radb = 1
+#
+# coil = Coil(3, 3, 3, rada, radb, 100)
+# coils_list.append(coil)
+#
+# coil = Coil(3 + 0.75, 3, 3, rada, radb, 100)
+# coils_list.append(coil)
+#
+# coil = Coil((3 + 0.75 * np.cos(np.rad2deg(60))), (3 - 0.75 * np.sin(np.rad2deg(60))), 3, rada, radb, 100)
+# coils_list.append(coil)
+#
+# x_axis_min = -10 * 0.01
+# x_axis_max = 10 * 0.01
+# x_axis_prec = 1 * 0.01
+#
+# y_axis_min = 0 * 0.01
+# y_axis_max = 20 * 0.01
+# y_axis_prec = 1 * 0.01
+#
+# z_axis_min = -10 * 0.01
+# z_axis_max = 10 * 0.01
+# z_axis_prec = 1 * 0.01
+
 """Structure simplifying the passing of axis dimensions as arguments to other functions"""
 axis_dict = {'Xmin': x_axis_min, 'Xmax': x_axis_max, 'Xprec': x_axis_prec,
     'Ymin': y_axis_min, 'Ymax': y_axis_max, 'Yprec': y_axis_prec,
@@ -151,3 +177,30 @@ plot_planar_array(nb_elem, arrays_list, coil_definition)
 image_slice_B1(B1f, axis_dict)
 
 plt.show()
+
+"""
+nb_elem = 3
+rada = 1
+radb = 1
+
+coil = Coil(3, 3, 3, rada, radb, 100)
+coils_list.append(coil)
+
+coil = Coil(3 + 0.75, 3, 3, rada, radb, 100)
+coils_list.append(coil)
+
+coil = Coil((3 + 0.75*cos(60)), (3 - 0.75*sin(60), 3, rada, radb, 100)
+coils_list.append(coil)
+
+x_axis_min = -10 * 0.01
+x_axis_max = 10 * 0.01
+x_axis_prec = 1 * 0.01
+
+y_axis_min = 0 * 0.01
+y_axis_max = 20 * 0.01
+y_axis_prec = 1 * 0.01
+
+z_axis_min = -10 * 0.01
+z_axis_max = 10 * 0.01
+z_axis_prec = 1 * 0.01
+"""
