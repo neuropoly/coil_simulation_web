@@ -1,16 +1,18 @@
-__author__ = 'Pier-Luc'
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import numpy as np
 
-def image_slice_B1(B1f, axis_dict):
+__author__ = 'Pier-Luc'
+
+
+def image_slice_B1(B1f, axis_dict, output_file):
     # x_len = np.size(B1f,1)
     # z_len = np.size(B1f,2)
     # print("x length :", x_len)
     # print("z length :", z_len)
     B1_flipped = np.zeros(B1f.shape)
     B1f = np.transpose(B1f)
-    top = np.size(B1f,1) - 1
+    top = np.size(B1f, 1) - 1
     for i in range(top-1):
         B1_flipped[i+1, :] = B1f[top-i, :]
 
@@ -25,4 +27,5 @@ def image_slice_B1(B1f, axis_dict):
     plt.tight_layout()
     cbar = fig.colorbar(img, cax=cax)
     cbar.ax.set_ylabel('[Tesla]', labelpad=20)
-    plt.show()
+    plt.savefig(output_file)
+    # plt.show()
