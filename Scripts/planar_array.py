@@ -1,3 +1,4 @@
+import sys
 from coil import Coil
 from phantom import Phantom
 from calc_field import calc_field
@@ -15,10 +16,8 @@ PI = np.pi
 def get_parser():
     # Initialize parser
     parser = Parser(__file__)
-    # TODO Make sure parser is functional with arguments passed via command line (if this is the intended purpose.
-    # If the parser only serves for the arguments from a request, ignore this. As of now, I am not sure if
-    # we need command line at all.
-    # Mandatory arguments
+
+    # TODO Ensure parser can properly receive arguments from a web request
     parser.usage.set_description("This program takes a preset coil configuration as input"
                                  "that is either cylindrical or planar, and computes the "
                                  "corresponding magnetic field by calling calc_field.py."
@@ -26,13 +25,16 @@ def get_parser():
                                  "slice with field intensity. The user can also display"
                                  " the coils.")
 
-    # TODO Add list of arguments of script with parser.add_option() that are relevant to the script.
-    # Here is a couple examples that could be used in the final version.
-    # As of 15/11/16, we still need presets for phantom and coil configs before having surefire arguments."""
-
-    parser.add_option(name="-p",
+    parser.add_option(name="-r",
                       type_value="int",
-                      description="Determine preset to be used",
+                      description="Determine number of rows",
+                      mandatory=True,
+                      example="1",
+                      default_value="1")
+
+    parser.add_option(name="-c",
+                      type_value="int",
+                      description="Determine number of columns",
                       mandatory=True,
                       example="1",
                       default_value="1")
@@ -44,12 +46,27 @@ def get_parser():
                       example="b1_field.png",
                       default_value='')
 
+    parser.add_option(name="-radius",
+                      type_value="int",
+                      description="Determine if array is cylindrical by giving it a radius (in cm)",
+                      mandatory=False,
+                      example="3",
+                      default_value="0")
+
     parser.add_option(name="-m",
                       type_value="material",
                       description="Material to be analyzed (phantom)",
                       mandatory=False,
                       example="water",
                       default_value="water")
+    return parser
+
+# Get parser info
+parser = get_parser()
+arguments = parser.parse(sys.argv[1:])
+r = arguments['-r']
+c = arguments['-c']
+o = arguments['-o']
 
 coil_definition = 100  # Number of points in each coil
 
