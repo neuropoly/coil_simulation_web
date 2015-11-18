@@ -27,13 +27,13 @@ def get_parser():
                                  " the coils.")
 
     parser.add_option(name="-rada",
-                      type_value="int",
+                      type_value="float",
                       description="Determine radius a",
                       mandatory=True,
                       example="1",
                       default_value="3")
     parser.add_option(name="-radb",
-                      type_value="int",
+                      type_value="float",
                       description="Determine radius b",
                       mandatory=True,
                       example="1",
@@ -61,7 +61,7 @@ def get_parser():
 
     parser.add_option(name="-o1",
                       type_value="file_output",
-                      description="Coils attay file",
+                      description="Coils array file",
                       mandatory=True,
                       example="coils.png",
                       default_value='')
@@ -99,29 +99,28 @@ c = arguments['-c']
 o = arguments['-o']
 o1 = arguments['-o1']
 
-coil_definition = 100  # Number of points in each coil
+coil_definition = 25  # Number of points in each coil
 
 arrays_list = []
 coils_list = []
-preset_try = input("Do you want to use a preset? (y/n)")
-if preset_try == 'y':
-    d = 0.75
-    pytha_x = np.cos(np.rad2deg(60))
-    pytha_y = np.sin(np.rad2deg(60))
-    d_x = round(d * pytha_x)
-    d_y = round(d * pytha_y)
-    nb_elem = (c * r) - round(r / 2)
+preset_try = input("Do you want to use a preset? (1/0)")
+if preset_try == 1:
+    d = 0.75*2*rad_a
+    """60 deg = 1.0472 rad"""
+    pytha_x = np.cos(1.0472)
+    pytha_y = np.sin(1.0472)
+    d_x = d * pytha_x
+    d_y = d * pytha_y
+    nb_elem = int((c * r) - round(r / 2))
 
-    for i in r:
-        if i % 2 == 0:
+    for i in range(r):
+        if i % 2 == 0 and i != 0:
             d_x = 0
-            d_y = 0
+            coils_list.pop()
         else:
-            d_x = round(d * pytha_x)
-            d_y = round(d * pytha_y)
-            coils_list.pop(coil)
-        for j in c:
-            coil = Coil((d * j) + (d_x * i), (d_y * i), 0, rad_a, rad_b, 100)
+            d_x = d * pytha_x
+        for j in range(c):
+            coil = Coil((d * j + d_x * i) * 0.01, (d_y * i) * 0.01, 0, rad_a * 0.01, rad_b * 0.01, coil_definition)
             coils_list.append(coil)
 else:
     nb_elem = input("Input desired number of coils: ")
@@ -200,7 +199,7 @@ plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
 
 image_slice_B1(B1f, axis_dict, o)
 
-# plt.show()
+plt.show()
 
 """
             # nb_elem = 3
