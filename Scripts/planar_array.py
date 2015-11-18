@@ -25,6 +25,18 @@ def get_parser():
                                  "slice with field intensity. The user can also display"
                                  " the coils.")
 
+    parser.add_option(name="-rada",
+                      type_value="int",
+                      description="Determine radius a",
+                      mandatory=True,
+                      example="1",
+                      default_value="3")
+    parser.add_option(name="-radb",
+                      type_value="int",
+                      description="Determine radius b",
+                      mandatory=True,
+                      example="1",
+                      default_value="3")
     parser.add_option(name="-r",
                       type_value="int",
                       description="Determine number of rows",
@@ -46,6 +58,20 @@ def get_parser():
                       example="b1_field.png",
                       default_value='')
 
+    parser.add_option(name="-o1",
+                      type_value="file_output",
+                      description="Coils attay file",
+                      mandatory=True,
+                      example="coils.png",
+                      default_value='')
+
+    parser.add_option(name="-d",
+                      type_value="int",
+                      description="Coil definition (number of points)",
+                      mandatory=False,
+                      example="100",
+                      default_value='100')
+
     parser.add_option(name="-radius",
                       type_value="int",
                       description="Determine if array is cylindrical by giving it a radius (in cm)",
@@ -64,9 +90,12 @@ def get_parser():
 # Get parser info
 parser = get_parser()
 arguments = parser.parse(sys.argv[1:])
+rad_a = arguments['-rada']
+rad_b = arguments['-radb']
 r = arguments['-r']
 c = arguments['-c']
 o = arguments['-o']
+o1 = arguments['-o1']
 
 coil_definition = 100  # Number of points in each coil
 
@@ -172,11 +201,11 @@ B1f = np.zeros((x_len, z_len))
 B1f[:, :] = bB1f[:, 1, :]
 
 """MatPlotLib calls to display the coils in 3-D"""
-plot_planar_array(nb_elem, arrays_list, coil_definition)
+plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
 
-image_slice_B1(B1f, axis_dict)
+image_slice_B1(B1f, axis_dict, o)
 
-plt.show()
+# plt.show()
 
 """
 nb_elem = 3
