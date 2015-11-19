@@ -114,13 +114,14 @@ if preset_try == 1:
     nb_elem = int((c * r) - round(r / 2))
 
     for i in range(r):
-        if i % 2 == 0 and i != 0:
+        if i % 2 == 0:
             d_x = 0
-            coils_list.pop()
+            if i != 0:
+                coils_list.pop()
         else:
             d_x = d * pytha_x
         for j in range(c):
-            coil = Coil((d * j + d_x * i) * 0.01, (d_y * i) * 0.01, 0, rad_a * 0.01, rad_b * 0.01, coil_definition)
+            coil = Coil((d * j + d_x) * 0.01, (d_y * i) * 0.01, 0, rad_a * 0.01, rad_b * 0.01, coil_definition)
             coils_list.append(coil)
 else:
     nb_elem = input("Input desired number of coils: ")
