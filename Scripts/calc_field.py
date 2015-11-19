@@ -11,7 +11,7 @@ freq = 123.2*10**6  # define frequency
 """This function computes the B1 magnetic field and magentic potential vector"""
 
 
-def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 25):
+def calc_field(arrays_list, axis_dict, nb_elem, coil_definition):
     """Define each axis length"""
 
     x_len = int((axis_dict['Xmax'] - axis_dict['Xmin']) / axis_dict['Xprec'])
