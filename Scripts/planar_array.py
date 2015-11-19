@@ -68,7 +68,7 @@ def get_parser():
                       example="coils.png",
                       default_value='')
 
-    parser.add_option(name="-orientation",
+    parser.add_option(name="-definition",
                       type_value="int",
                       description="Coil definition (number of points)",
                       mandatory=False,
@@ -133,13 +133,14 @@ if preset_try == 1:
     nb_elem = int((c * r) - round(r / 2))
 
     for i in range(r):
-        if i % 2 == 0 and i != 0:
+        if i % 2 == 0:
             d_x = 0
-            coils_list.pop()
+            if i != 0:
+                coils_list.pop()
         else:
             d_x = d * pytha_x
         for j in range(c):
-            coil = Coil((d * j + d_x * i) * 0.01, (d_y * i) * 0.01, 0, rad_a * 0.01, rad_b * 0.01, coil_definition)
+            coil = Coil((d * j + d_x) * 0.01, (d_y * i) * 0.01, 0, rad_a * 0.01, rad_b * 0.01, coil_definition)
             coils_list.append(coil)
 else:
     nb_elem = input("Input desired number of coils: ")
@@ -219,30 +220,3 @@ plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
 image_slice_B1(B1f, axis_dict, o)
 
 plt.show()
-
-"""
-            # nb_elem = 3
-            # rada = 1
-            # radb = 1
-            #
-            # coil = Coil(3, 3, 3, rada, radb, 100)
-            # coils_list.append(coil)
-            #
-            # coil = Coil(3 + 0.75, 3, 3, rada, radb, 100)
-            # coils_list.append(coil)
-            #
-            # coil = Coil((3 + 0.75 * np.cos(np.rad2deg(60))), (3 - 0.75 * np.sin(np.rad2deg(60))), 3, rada, radb, 100)
-            # coils_list.append(coil)
-            #
-            # x_axis_min = -10 * 0.01
-            # x_axis_max = 10 * 0.01
-            # x_axis_prec = 1 * 0.01
-            #
-            # y_axis_min = 0 * 0.01
-            # y_axis_max = 20 * 0.01
-            # y_axis_prec = 1 * 0.01
-            #
-            # z_axis_min = -10 * 0.01
-            # z_axis_max = 10 * 0.01
-            # z_axis_prec = 1 * 0.01
-"""
