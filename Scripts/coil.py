@@ -20,8 +20,8 @@ class Coil:
     and the coil itself."""
 
     def gen_array(self, N):
-        coil_array = np.array([[0.0 for j in range(3)] for j in range(N)]) #columns then lines
-        t=-PI/2
+        coil_array = np.array([[0.0 for j in range(3)] for j in range(N)]) # columns then lines
+        t = -PI/2
 
         for i in range(N):
             x_coord = self.posinix+self.rada*math.cos(t)
@@ -98,7 +98,7 @@ class Coil:
 
         return coil_translated
 
-#Ancien code		
+# Ancien code
 """def rotation(self, posinix, radc)
         theta=-(m.asin(posinix(en)/radc)
         #generate rotation matrix for Y axis
