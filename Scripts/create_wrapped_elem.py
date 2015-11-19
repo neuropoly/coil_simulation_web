@@ -28,19 +28,3 @@ def create_wrapped_elem(radc, ne):
 
     """the new X position of the element"""
     return newxpos
-
-#ancien code
-"""
-import scipyo
-from scipy import math as m
-from scipy import numpy as np
-
-ang = n.linspace(-PI/2, PI/2, ne+2) # angle generation between -180 to 180 degrees
-size = np.shape(ang)
-
-for i in size(0)
-	angelem(i) = ang(i+1)
-#for end
-
-return m.sin(angelem)*radc #the new X position of the element
-"""

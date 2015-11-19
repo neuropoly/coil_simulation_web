@@ -200,30 +200,3 @@ plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
 image_slice_B1(B1f, axis_dict, o)
 
 plt.show()
-
-"""
-            # nb_elem = 3
-            # rada = 1
-            # radb = 1
-            #
-            # coil = Coil(3, 3, 3, rada, radb, 100)
-            # coils_list.append(coil)
-            #
-            # coil = Coil(3 + 0.75, 3, 3, rada, radb, 100)
-            # coils_list.append(coil)
-            #
-            # coil = Coil((3 + 0.75 * np.cos(np.rad2deg(60))), (3 - 0.75 * np.sin(np.rad2deg(60))), 3, rada, radb, 100)
-            # coils_list.append(coil)
-            #
-            # x_axis_min = -10 * 0.01
-            # x_axis_max = 10 * 0.01
-            # x_axis_prec = 1 * 0.01
-            #
-            # y_axis_min = 0 * 0.01
-            # y_axis_max = 20 * 0.01
-            # y_axis_prec = 1 * 0.01
-            #
-            # z_axis_min = -10 * 0.01
-            # z_axis_max = 10 * 0.01
-            # z_axis_prec = 1 * 0.01
-"""
