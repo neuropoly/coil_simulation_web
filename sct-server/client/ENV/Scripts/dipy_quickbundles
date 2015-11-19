@@ -1,0 +1,4 @@
+#!C:\Users\Charles\Documents\poly\A2015\spinalcordtoolbox_web-master\client\ENV\Scripts\python.exe
+# EASY-INSTALL-SCRIPT: 'dipy==0.9.2','dipy_quickbundles'
+__requires__ = 'dipy==0.9.2'
+__import__('pkg_resources').run_script('dipy==0.9.2', 'dipy_quickbundles')

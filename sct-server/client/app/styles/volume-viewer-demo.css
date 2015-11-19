@@ -1,0 +1,331 @@
+/*
+* BrainBrowser: Web-based Neurological Visualization Tools
+* (https://brainbrowser.cbrain.mcgill.ca)
+*
+* Copyright (C) 2011
+* The Royal Institution for the Advancement of Learning
+* McGill University
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as
+* published by the Free Software Foundation, either version 3 of the
+* License, or (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*
+* Author: Tarek Sherif <tsherif@gmail.com> (http://tareksherif.ca/)
+* Author: Nicolas Kassis
+*/
+
+/*body {
+  background-color: #000000;
+}*/
+
+/*#brainbrowser-wrapper {
+  width: 60em;
+  margin: 50px auto;
+}
+*/
+
+.toolbox {
+    padding-bottom: 0;
+    text-align: center;
+
+    background: #ffffff;
+    border: 1px solid #1e634e;
+    color: #000000;
+}
+
+#volume-viewer {
+    background: #f2f2f2;
+    color: #000000;
+
+}
+
+/*#myBox {*/
+    /*display: inline-block;*/
+/*}*/
+
+/*.volume-container {
+    display: table-cell;
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}*/
+
+canvas.slice-display {
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+  margin-left: 2px
+
+}
+
+.slice-display {
+    /*margin-top: 10px;*/
+    margin-left: 2px border : 5 px solid blue;
+}
+
+.volume-viewer-controls {
+    font-size: 12px;
+    padding: 10px;
+    background: #f2f2f2;
+    color: #000000;
+}
+
+.volume-viewer-controls > div {
+    /*margin-bottom: 10px;*/
+}
+
+.volume-controls {
+    padding-bottom: 10px;
+    text-align: center;
+
+    background: #f2f2f2;
+    color: #000000;
+    width: auto;
+    height: 150vh;
+}
+
+#global-controls {
+    text-align: center;
+    padding-bottom: 0;
+}
+
+#global-controls .instructions {
+    padding: 10px 0 5px 0;
+}
+
+.control-heading {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.control-heading:not(:first-child) {
+    /*margin-top: 12px;*/
+}
+
+/*.control-displays {
+    border: none;
+    padding: 5px;
+    margin-left: 10px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: 2px 2px 0px 0px #787878;
+    -webkit-box-shadow: 2px 2px 0px 0px #787878;
+    box-shadow: 2px 2px 0px 0px #787878;
+    width: 3em;
+}*/
+
+/*.coords .control-inputs {
+    margin-right: 0.6em;
+    width: 40px;
+    font-size: 10px;
+}*/
+
+.volume-viewer-threshold, .volume-viewer-blend {
+    width: 80%;
+    margin: auto;
+}
+
+.ui-slider .ui-slider-handle .ui-state-default .ui-corner-all {
+    color: #777777 !important;
+    font-size: 10px;
+    padding: 3px;
+    text-shadow: 0 1px 0 #FFFFFF;
+    text-decoration: none;
+}
+
+.slider {
+    margin-top: 1.5em !important;
+    margin-bottom: 1em !important;
+}
+
+.thresh-inputs {
+    position: relative;
+    height: 1em;
+}
+
+.thresh-input-left {
+    position: absolute;
+    left: 3px;
+}
+
+.thresh-input-right {
+    position: absolute;
+    right: 10px;
+}
+
+.slice-series-button {
+    font-size: 11px;
+}
+
+#volume-file {
+    /*margin-top: 12px;*/
+    /*margin-bottom: 10px;*/
+    display: none;
+}
+
+#volume-file-submit {
+    margin-top: 6px;
+}
+
+#volume-file-hint {
+    margin: 4px;
+}
+
+#volume-file-hint a {
+    color: orange;
+}
+
+.intensity-value {
+    padding: 1px;
+}
+
+/*#config-right {
+    float: right;
+    vertical-align: top;
+    width: 45%;
+}*/
+
+/*#config-left {
+    display: inline-block;
+    vertical-align: top;
+    width: 45%;
+}*/
+
+
+.single-volume-controls {
+    position: absolute;
+    left: 75%;
+    width: 25%;
+    font: 'Helvetica Neue Light';
+}
+.input-sm{
+    width: 50px;
+    border-radius: 5px;
+}
+.control-inputs{
+    border-radius: 5px;
+    width:50px;
+}
+#overlay{
+  width: 75%;
+  height: 75vh;
+}
+
+.overlay-viewer-display {
+    /*text-align: -webkit-center;*/
+    display: -webkit-inline-box;
+    /*display: inline-block;*/
+}
+/*@media (max-width: 1050px) {
+    .single-volume-controls {
+        display: none;
+    }
+
+    #overlay{
+        width: 100%;
+    }
+
+}*/
+
+/* File Browser LIST sortable */
+#sortable {
+    width: 100%;
+    height: 100px;
+    border: 1px solid gray;
+  background-color: #dddddd;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+    font-family: Georgia, Times, serif;
+    font-size: 12px;
+    overflow: auto;
+    padding-left: 0px;
+}
+
+#sortable ul {
+    list-style: none;
+}
+
+#sortable ul li a {
+    display: block;
+    text-decoration: none;
+    color: #000000;
+    background-color: #FFFFFF;
+    line-height: 15px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #CCCCCC;
+  box-shadow: 2px 4px 11px -2px #BFBFBF;
+  -webkit-box-shadow: 2px 4px 11px -2px #BFBFBF;
+  -moz-box-shadow: 2px 4px 11px -2px #BFBFBF;
+  -o-box-shadow: 2px 4px 11px -2px #BFBFBF;
+    cursor: hand;
+}
+ul{
+    padding-left: 0px;
+    -webkit-padding-start: 0px;
+}
+#sortable ul li a:hover {
+    color: #FFFFFF;
+    background-image: url("../images/hover.png");
+    background-repeat: repeat-x;
+  cursor: pointer;
+}
+
+#sortable ul li a strong {
+    margin-right: 10px;
+}
+
+.onclick {
+    color: #AAAAAA;
+    background-image: url("../images/hover.png");
+    background-repeat: repeat-x;
+}
+
+.trash{
+    font-size:2em;
+    color: rgb(4, 24, 247);
+    height: 40px;
+    text-align: right;
+}
+
+.infoglyph{
+  font-size:2em;
+  color: rgb(0, 49, 247);
+  vertical-align: middle;
+}
+
+.trash-hover{
+    color: #38ff00 !important;
+    font-size: 3em !important;
+    border: #ff00aa dashed 3px;
+}
+.add-volume{
+    font-size:2em;
+    color: rgb(0, 247, 3);
+    height: 40px;
+    text-align: right
+}
+.add-volume:hover{
+    color: #00ffe5 !important;
+    cursor: hand;
+}
+
+#overlay{
+  background-color: #f2f2f2;
+}
+
+#overlay_viewer{
+  margin-left: 12.5%;
+}

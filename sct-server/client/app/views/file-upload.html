@@ -1,0 +1,32 @@
+<div ng-controller="FileUploadCtrl">
+  <br/>
+  <!--<input type="text" class="form-control" placeholder="{{authData.uid.split(':')[1]}}"  ng-model="username"></br>-->
+  <div ng-if="$storage.uid">
+  <!--<div class="btn btn-default" ngf-select ng-model="file" ngf-multiple="false" style="display: none"><span
+    class="glyphicon glyphicon-fire text-warning" aria-hidden="true" accept="image/*,application/pdf/*.nii/*.nii.gz"></span> Select File
+  </div>-->
+
+  <div class="btn btn-default btn-group-justified" ngf-select ngf-change="upload($files)" ngf-multiple="true"><span
+    class="glyphicon glyphicon-upload text-success" aria-hidden="true" accept="image/*,application/pdf/*.nii/*.nii.gz"></span> Select File
+  </div>
+  <br/><br/>
+  Or:
+  <div ngf-drop ngf-select ng-model="files" class="drop-box"
+       ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+       accept="image/*,application/pdf/*.nii/*.nii.gz">Drop .nii, other files here or click to upload
+  </div>
+  <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+  <br/>
+
+  Files:
+  <ul>
+    <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
+  </ul>
+  Upload Log:
+  <pre>{{log}}</pre>
+</div>
+
+<div ng-if="!$storage.uid">
+  Please Register or Log-in.
+</div>
+</div>
