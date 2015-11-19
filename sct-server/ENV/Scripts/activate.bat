@@ -1,5 +1,5 @@
 @echo off
-set "VIRTUAL_ENV=C:\Users\Charles\Documents\poly\A2015\spinalcordtoolbox_web-master\ENV"
+set "VIRTUAL_ENV=C:\Users\Charles\Documents\GitHub\coil_simulation_web\sct-server\ENV"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

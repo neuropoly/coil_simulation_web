@@ -39,7 +39,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="$(if [ "$OSTYPE" "==" "cygwin" ]; then cygpath -u 'C:\Users\Charles\Documents\poly\A2015\spinalcordtoolbox_web-master\ENV'; else echo '/C/Users/Charles/Documents/poly/A2015/spinalcordtoolbox_web-master/ENV'; fi;)"
+VIRTUAL_ENV="$(if [ "$OSTYPE" "==" "cygwin" ]; then cygpath -u 'C:\Users\Charles\Documents\GitHub\coil_simulation_web\sct-server\ENV'; else echo '/C/Users/Charles/Documents/GitHub/coil_simulation_web/sct-server/ENV'; fi;)"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
