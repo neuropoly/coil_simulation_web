@@ -100,13 +100,13 @@ o = arguments['-o']
 o1 = arguments['-o1']
 coil_definition = arguments['-d']
 
-#coil_definition = 25  # Number of points in each coil
+# coil_definition = 25  # Number of points in each coil
 
 arrays_list = []
 coils_list = []
 preset_try = input("Do you want to use a preset? (1/0)")
 if preset_try == 1:
-    d = 0.75*2*rad_a
+    d = 0.75 * 2 * rad_a
     """60 deg = 1.0472 rad"""
     pytha_x = np.cos(1.0472)
     pytha_y = np.sin(1.0472)
@@ -200,5 +200,7 @@ B1f[:, :] = bB1f[:, 1, :]
 plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
 
 image_slice_B1(B1f, axis_dict, o)
+
+print B1f
 
 plt.show()
