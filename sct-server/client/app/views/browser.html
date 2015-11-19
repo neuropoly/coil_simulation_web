@@ -1,0 +1,26 @@
+<div ng-controller="BrowserCtrl" >
+
+  <div class="tree-browser">
+    <a href="{{tree_path}}">File Browser</a>
+    <js-tree id="jstree" tree-plugins="checkbox" tree-events="changed:changedCB" tree-data="scope" tree-model="treeModel" ></js-tree>
+  </div>
+  <div class="form-inline center-block">
+  <div class="form-group" >
+  <button type="button" class="btn btn-default center-block" ng-click="refresh()">
+    <span class="glyphicon glyphicon-refresh"></span> Refresh</button>
+  <button type="button" class="btn btn-default center-block" ng-click="brainbrowser(NewFile.relative_pathArray)">
+    <span class="glyphicon glyphicon-picture"></span> Visualize</button>
+    </div>
+    <div class="form-group" >
+  <button type="button" class="btn btn-default center-block" ng-confirm-message="Are you sure to delete these selected files?" ng-confirm="delete()">
+    <span class="glyphicon glyphicon-remove" ></span> Delete</button>
+      <button type="button" class="btn btn-default center-block" ng-click="download()">
+        <span class="glyphicon glyphicon-download" ></span> Download</button>
+  </div>
+  </div>
+  <div class="file-viewer">
+    <pre><code>{{filesPath}}</code></pre>
+  </div>
+
+
+</div>

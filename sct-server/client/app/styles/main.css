@@ -1,0 +1,216 @@
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+  padding: 0;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 10px;
+}
+
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 10px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+  background-color: #ffffff;
+  z-index: 0;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Responsive: Portrait tablets and up */
+/*@todo: configure the css for responsive display*/
+/*@media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}*/
+
+/*Tree Browser style*/
+
+.tree-browser {
+  overflow: auto;
+  max-height: 50vh;
+}
+
+.file-viewer {
+  margin: auto;
+  overflow: auto;
+  max-height: 25vh;
+}
+
+/*File upload style*/
+.drop-box {
+  background: #F8F8F8;
+  border: 5px dashed #DDD;
+  width: auto;
+  height: 100px;
+  text-align: center;
+  color: slategrey;
+  padding-top: 33px;
+}
+
+.dragover {
+  border: 5px dashed blue;
+}
+
+/*Scroll bar hack*/
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 40px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #f5f5f5;
+}
+
+.mandatory{
+  background-color: rgba(255, 224, 217, 0.13);
+  border: solid red 1px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.popover{
+  display:block !important;
+  max-width: 400px!important;
+  width:auto;
+  white-space:pre-line;
+  display: inline;
+}
+.popover-content {
+  display:block !important;
+  max-width: 400px!important;
+  width:auto;
+  white-space:pre-line;
+  display: inline;
+
+}
+
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90%;
+    max-width:1200px;
+  }
+}
+
+/*LOGIN FORM*/
+.form-signin
+{
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading, .form-signin .checkbox
+{
+  margin-bottom: 10px;
+}
+.form-signin .form-control
+{
+  font-size: 16px;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.account-wall
+{
+  margin-top: 20px;
+  padding: 40px 0px 20px 0px;
+  background-color: #f7f7f7;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+.login-title
+{
+  color: #555;
+  font-size: 18px;
+  font-weight: 400;
+  display: block;
+}
+.profile-img
+{
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 10px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.need-help
+{
+  margin-top: 10px;
+}
+.new-account
+{
+  display: block;
+  margin-top: 10px;
+}
+/*END LOGIN FORM*/
+
+.rubber{
+  height: 2em;
+}
+.rubber:hover{
+  color: #f7172a;
+  cursor: hand;
+}
+
+/*table*/
+table {
+  border: 1px solid #666;
+  width: 100%;
+}
+th {
+  background: #f8f8f8;
+  font-weight: bold;
+  padding: 2px;
+}

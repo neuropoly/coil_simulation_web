@@ -1,0 +1,66 @@
+<div class="container">
+
+
+    <div class="row">
+      <h3>Dashboard</h3>
+
+      <div style="background-color: #e3ddc9">
+        <div class="col-lg-8 col-sm-12 col-md-8">
+      <h4>Users</h4>
+      <div class="well" >
+        <input ng-model="searchText" placeholder="Search in database">
+        <br />
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Country</th>
+            <th>Research Center</th>
+            <th>Occupation</th>
+            <!--<th>Created on</th>-->
+            <th style="width: 36px;"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-class=" user.confirmed ? 'success' : 'warning' " ng-repeat="user in users | filter:searchText">
+            <td>{{user.id}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.country}}</td>
+            <td>{{user.research_center}}</td>
+            <td>{{user.occupation}}</td>
+            <!--<td>{{user.created_on}}</td>-->
+            <td>
+              <a ng-hide="user.confirmed" role="button" ng-confirm-message="Do you want to resend the confirmation link by email?" ng-confirm="reconfirm(user.email)" ><i class="glyphicon glyphicon-refresh"></i></a>
+              <a role="button" href="mailto:{{user.email}}"><i class="glyphicon glyphicon-envelope"></i></a>
+              <a role="button" ng-confirm-message="Are you sure you want to delete the user?" ng-confirm="delete(user.id)"><i class="glyphicon glyphicon-remove"></i></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="btn-toolbar">
+        <button class="btn btn-primary" ng-click="new_user = !new_user">New User</button>
+        <button class="btn">Import</button>
+        <button class="btn">Export</button>
+          <button class="btn btn-primary">Delete Unconfirmed</button>
+          <div ng-show="new_user">
+              <div class="form-signin">
+              <form name="registerF" sf-schema="registerSchema" sf-form="registerForm" sf-model="registerModel" ng-submit="onSubmit(registerF)"></form>
+              </div>
+          </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      <div class="col-lg-4 col-sm-12 col-md-4">
+      <h4>Process</h4>
+      {{process}}
+      </div>
+      <div class="col-lg-4 col-sm-12 col-md-4">
+      <h4>General stats</h4>
+      {{stats}}
+      </div>
+
+    </div>
+
+</div>

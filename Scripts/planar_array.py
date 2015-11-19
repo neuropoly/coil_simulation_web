@@ -32,12 +32,14 @@ def get_parser():
                       mandatory=True,
                       example="1",
                       default_value="3")
+
     parser.add_option(name="-radb",
                       type_value="float",
                       description="Determine radius b",
                       mandatory=True,
                       example="1",
                       default_value="3")
+
     parser.add_option(name="-r",
                       type_value="int",
                       description="Determine number of rows",
@@ -66,12 +68,26 @@ def get_parser():
                       example="coils.png",
                       default_value='')
 
-    parser.add_option(name="-d",
+    parser.add_option(name="-definition",
                       type_value="int",
                       description="Coil definition (number of points)",
                       mandatory=True,
                       example="100",
                       default_value='100')
+
+    parser.add_option(name="-orientation",
+                      type_value="int",
+                      description="Determine which plane the slice will be taken in (1 for XZ, 2 for XY)",
+                      mandatory=True,
+                      example="1",
+                      default_value='1')
+
+    parser.add_option(name="-slice",
+                      type_value="int",
+                      description="Determines the location of the slice in the corresponding plane",
+                      mandatory=True,
+                      example="5",
+                      default_value='0')
 
     parser.add_option(name="-radius",
                       type_value="int",
@@ -98,6 +114,8 @@ r = arguments['-r']
 c = arguments['-c']
 o = arguments['-o']
 o1 = arguments['-o1']
+orientation = arguments['-orientation']
+slice_location = arguments['-slice']
 coil_definition = arguments['-d']
 
 # coil_definition = 25  # Number of points in each coil
