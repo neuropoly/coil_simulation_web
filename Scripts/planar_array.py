@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from image_slice_B1 import image_slice_B1
 from plot_planar_array import plot_planar_array
+from create_wrapped_elem import create_wrapped_elem
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from scipy import math
 from mpl_toolkits.mplot3d import Axes3D
@@ -37,6 +38,13 @@ def get_parser():
                       type_value="float",
                       description="Determine radius b",
                       mandatory=True,
+                      example="1",
+                      default_value="3")
+
+    parser.add_option(name="-radc",
+                      type_value="float",
+                      description="Determine radius c of cylinder (for circular_array)",
+                      mandatory=False,
                       example="1",
                       default_value="3")
 
@@ -102,6 +110,13 @@ def get_parser():
                       mandatory=False,
                       example="water",
                       default_value="water")
+
+    parser.add_option(name="-type",
+                      type_value="int",
+                      description="Determine wanted simulation (Planar = 1, Circular = 2)",
+                      mandatory=True,
+                      example="1",
+                      default_value="1")
     return parser
 
 
@@ -110,13 +125,15 @@ parser = get_parser()
 arguments = parser.parse(sys.argv[1:])
 rad_a = arguments['-rada']
 rad_b = arguments['-radb']
+rad_c = arguments['-radc']
 r = arguments['-r']
 c = arguments['-c']
 o = arguments['-o']
 o1 = arguments['-o1']
 orientation = arguments['-orientation']
 slice_location = arguments['-slice']
-coil_definition = arguments['-d']
+coil_definition = arguments['-definition']
+type = arguments['-type']
 
 # coil_definition = 25  # Number of points in each coil
 
@@ -142,10 +159,16 @@ if preset_try == 1:
         for j in range(c):
             coil = Coil((d * j + d_x) * 0.01, (d_y * i) * 0.01, 0, rad_a * 0.01, rad_b * 0.01, coil_definition)
             coils_list.append(coil)
-else:
+    i = 0
+    for coil in coils_list:
+        arrays_list.append(coil.gen_array(coil_definition))
+        coil.info()
+        i += 1
+
+elif type == 1:
     nb_elem = input("Input desired number of coils: ")
-    rad_a = input("Input radius 'a' (cm): ") * 0.01
-    rad_b = input("Input radius 'b' (cm): ") * 0.01
+    rad_a = rad_a * 0.01
+    rad_b = rad_b * 0.01
 
     """This block receives inputs from the user to define the coils and the axis system."""
     for i in range(int(nb_elem)):
@@ -155,6 +178,37 @@ else:
         pos_ini_z = input("Input initial Z-axis position: ") * 0.01
         coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
         coils_list.append(coil)
+
+    i = 0
+    for coil in coils_list:
+        arrays_list.append(coil.gen_array(coil_definition))
+        coil.info()
+        i += 1
+
+else:
+    nb_elem = input("Input desired number of coils: ")
+    rad_a = rad_a * 0.01
+    rad_b = rad_b * 0.01
+    rad_c = rad_c * 0.01
+
+    """This block receives inputs from the user to define the coils and the axis system."""
+    for i in range(int(nb_elem)):
+        print "Coil #", i
+        pos_ini_x = input("Input initial X-axis position: ") * 0.01
+        pos_ini_y = input("Input initial Y-axis position: ") * 0.01
+        pos_ini_z = input("Input initial Z-axis position: ") * 0.01
+        coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
+        coils_list.append(coil)
+
+    coil.pos_ini_x = 0
+
+    for j in range(int(nb_elem)):
+        new_pos_x = create_wrapped_elem(rad_c, int(nb_elem))
+    i = 0
+    for coil in coils_list:
+        arrays_list.append(coil.gen_array(coil_definition))
+        coil.info()
+        i += 1
 
 """Loop that naively ensures that the inputted axis are equal. To be modified later
    with the web interface"""
@@ -187,12 +241,13 @@ axis_dict = {'Xmin': x_axis_min, 'Xmax': x_axis_max, 'Xprec': x_axis_prec,
              'Zmin': z_axis_min, 'Zmax': z_axis_max, 'Zprec': z_axis_prec}
 
 """This block generates each point of the coil in a 3-D space"""
+"""
 i = 0
 for coil in coils_list:
     arrays_list.append(coil.gen_array(coil_definition))
     coil.info()
     i += 1
-
+"""
 """This block declares the matrix  for B1 and A and fills them with values returned
 by calc_field, which calculates with Biot-Savard the value of the magnetic field in
 each point of the user-defined 3-D space"""
