@@ -159,11 +159,10 @@ if preset_try == 1:
         for j in range(c):
             coil = Coil((d * j + d_x) * 0.01, (d_y * i) * 0.01, 0, rad_a * 0.01, rad_b * 0.01, coil_definition)
             coils_list.append(coil)
-    i = 0
+
     for coil in coils_list:
         arrays_list.append(coil.gen_array(coil_definition))
         coil.info()
-        i += 1
 
 elif type == 1:
     nb_elem = input("Input desired number of coils: ")
@@ -179,11 +178,10 @@ elif type == 1:
         coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
         coils_list.append(coil)
 
-    i = 0
     for coil in coils_list:
         arrays_list.append(coil.gen_array(coil_definition))
         coil.info()
-        i += 1
+
 
 else:
     nb_elem = input("Input desired number of coils: ")
@@ -204,11 +202,20 @@ else:
 
     for j in range(int(nb_elem)):
         new_pos_x = create_wrapped_elem(rad_c, int(nb_elem))
-    i = 0
+
     for coil in coils_list:
         arrays_list.append(coil.gen_array(coil_definition))
         coil.info()
-        i += 1
+
+    rotated_array = np.zeros[:, :, nb_elem]
+    translated_array = np.zeros[:, :, nb_elem]
+
+    for k in range(int(nb_elem)):
+        rotated_array[:, :, k] = coil.rotation(arrays_list, new_pos_x, k, rad_c)
+
+    for l in range(int(nb_elem)):
+        translated_array[:, :, l] = coil.translation(rotated_array, new_pos_x, l, rad_c)
+
 
 """Loop that naively ensures that the inputted axis are equal. To be modified later
    with the web interface"""
