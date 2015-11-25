@@ -4,7 +4,6 @@ PI = np.pi
 
 """Define physics constants of the coils"""
 u0 = 4*PI*(10**-7)  # relative permittivity for air
-coil_definition = 100  # points used to define coil
 I = 1.0  # constant current distribution in each coil
 cond = 0.7  # define conductivity
 freq = 123.2*10**6  # define frequency
@@ -12,7 +11,7 @@ freq = 123.2*10**6  # define frequency
 """This function computes the B1 magnetic field and magentic potential vector"""
 
 
-def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
+def calc_field(arrays_list, axis_dict, nb_elem, coil_definition):
     """Define each axis length"""
 
     x_len = int((axis_dict['Xmax'] - axis_dict['Xmin']) / axis_dict['Xprec'])
@@ -95,6 +94,8 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition = 100):
                     Ax_sum[a, b, c] = Ax_sum[a, b, c] + A_tmp[i]
                     Ay_sum[a, b, c] = Ay_sum[a, b, c] + A_tmp[i]
                     Az_sum[a, b, c] = Az_sum[a, b, c] + A_tmp[i]"""
+
+    # TODO Verify outputs by comparing with MATLAB results
 
     B1 = np.zeros((x_len, y_len, z_len))
     A = np.zeros((x_len, y_len, z_len))

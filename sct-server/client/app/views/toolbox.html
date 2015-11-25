@@ -1,0 +1,16 @@
+<div class="container">
+
+  <div class="col-lg-8 col-sm-12 col-md-8">
+    <div class="row">
+      <h3>The SCToolbox</h3>
+      <div ng-include="'views/tools.html'"></div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-sm-12 col-md-4 center-block">
+    <tabset justified="true" >
+      <tab heading="Browser"><div ng-include="'views/browser.html'"></div></tab>
+      <tab heading="Upload"><div ng-include="'views/file-upload.html'"></div></tab>
+      <tab heading="Console" ng-click="console()"> If nothing is open automatically click <a href="#/console">here</a> to access the console.</tab>
+    </tabset>
+  </div>
+</div>

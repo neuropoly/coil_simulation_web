@@ -4,7 +4,8 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from scipy import math
 from mpl_toolkits.mplot3d import Axes3D
 
-def plot_planar_array(nb_elem, arrays_list, N):
+
+def plot_planar_array(nb_elem, arrays_list, N, output_file):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     n = 0
@@ -19,3 +20,5 @@ def plot_planar_array(nb_elem, arrays_list, N):
     ax.set_ylabel('Y axis [m]')
     ax.set_zlabel('Z axis [m]')
     ax.set_title('Elements distribution around a cylinder')
+
+    plt.savefig(output_file)

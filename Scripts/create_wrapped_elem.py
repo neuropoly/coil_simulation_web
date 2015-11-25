@@ -13,32 +13,18 @@ PI = math.pi
 
 """angle generation between -180 to 180 degrees"""
 
+# TODO make the function compile with the rest of the code. As of 15/11/16, this script is not tested or used.
+
 
 def create_wrapped_elem(radc, ne):
     ang = np.linspace(-PI/2, PI/2, ne+2)
     size = np.shape(ang)
-    angelem = np.array([[0 for j in range(ne+2)] for j in range(1)])
+    angelem = np.zeros(ne+2)
 
-    for i in size(1):
-        angelem[1][i] = ang[1][i+1]
+    for i in range(2, size[0]):
+        angelem[i-1] = ang[i]
 
-    newxpos = math.sin(angelem)*radc
+    newxpos = np.sin(angelem)*radc
 
     """the new X position of the element"""
     return newxpos
-
-#ancien code
-"""
-import scipyo
-from scipy import math as m
-from scipy import numpy as np
-
-ang = n.linspace(-PI/2, PI/2, ne+2) # angle generation between -180 to 180 degrees
-size = np.shape(ang)
-
-for i in size(0)
-	angelem(i) = ang(i+1)
-#for end
-
-return m.sin(angelem)*radc #the new X position of the element
-"""

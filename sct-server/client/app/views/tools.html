@@ -1,0 +1,32 @@
+<div ng-controller="ToolsCtrl">
+  <div class="row">
+    <div class="row col-lg-7 col-md-7">
+      <div class="input-inline">
+        <label>Select a Tool:
+          <select class="form-control" ng-model="toolSelected" ng-options="tool.name for tool in tools"
+                  ng-change="change()">
+            <option value="">-- choose a SCTool --</option>
+          </select>
+        </label>
+        <button popover={{toolSelected.help_str}} popover-placement="bottom" type="button" class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span></button>
+        <br/>
+      </div>
+    </div>
+    <div class="row col-lg-7 col-md-7">
+      <div class="input-group">
+        <input id="inputs" name="inputs" type="text" placeholder="Inputs" class="form-control disabled" required=""
+               ng-model="inputs">
+        <span class="input-group-btn">
+        <button class="btn btn-success" type="button" ng-click="compute(toolSelected.name,args,inputs)">Go!</button>
+      </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-10">
+      <h5></h5>
+      <form name="toolsForm" sf-schema="schema" sf-form="form" sf-model="args" ng-submit="onSubmit(toolsForm)"></form>
+    </div>
+  </div>
+
+</div>

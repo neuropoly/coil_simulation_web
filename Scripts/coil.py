@@ -30,8 +30,8 @@ class Coil:
     and the coil itself."""
 
     def gen_array(self, N):
-        coil_array = np.array([[0.0 for j in range(3)] for j in range(N)]) #columns then lines
-        t=-PI/2
+        coil_array = np.array([[0.0 for j in range(3)] for j in range(N)]) # columns then lines
+        t = -PI/2
 
         for i in range(N):
             x_coord = self.posinix+self.rada*math.cos(t)
@@ -104,27 +104,3 @@ class Coil:
         coil_translated = np.dot(Tr, temp)
 
         return coil_translated
-
-#Ancien code		
-"""def rotation(self, posinix, radc)
-        theta=-(m.asin(posinix(en)/radc)
-        #generate rotation matrix for Y axis
-        Ry = [[m.cos(theta), 0, m.sin(theta)], [0, 1, 0], [-m.sin(theta), 0, m.cos(theta)]]
-        self.coil_rotated = dot(Ry, self.coil_init)
-        return self.coil_rotated
-
-    def translation(self, Tx, Ty, Tz, Tr):s
-        Tx=self.posinix(en)
-        Ty=0
-        Tz=self.radc-m.cos(m.asin(self.posinix(en)/self.radc))*self.radc
-        Tr=[[1, 0, 0, Tx], [0, 1, 0, Ty], [0, 0, 1, Tz], [0, 0, 0, 1]]
-
-        temp = np.vstack((self.coil_rotated),(np.ones(100,1))
-
-        self.coil_translated = dot(Tr, temp)
-
-        return self.coil_translated"""
-
-
-
-

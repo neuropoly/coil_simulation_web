@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <link rel="stylesheet" href="bower_components/jstree/dist/themes/default/style.css" />
+    <link rel='stylesheet' href='bower_components/angular-loading-bar/build/loading-bar.min.css' type='text/css' media='all' />
+  </head>
+  <body ng-app="angularSeedApp">
+
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <!--TODO: Add a HeaderCntrl to control active view and  update  the menu-->
+    <div class="header" ng-controller="HeaderCtrl">
+
+      <nav class="navbar navbar-default" role="navigation" bs-navbar>
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#/"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
+            iSCToolbox <code style="color: red;">(Work In Progress - laste update Nov 04 2015)</code></a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="{{logout_class}}" data-match-route="/viewer"><a href="#/viewer">Viewer</a></li>
+          <li class="{{logout_class}}" data-match-route="/toolbox"><a href="#/toolbox">Toolbox</a></li>
+          <li class="{{logout_class}}" data-match-route="/processmngmt"><a href="#/processMngmt">Process</a></li>
+          <!--<li data-match-route="/browser"><a href="#/browser">Browser</a></li>-->
+          <!--<li data-match-route="/file-upload"><a href="#/file-upload">File Upload</a></li>-->
+          <!--TODO: add documentation for the toolbox-->
+
+
+          <li class="{{logout_class}}" data-match-route="/login"><a ng-click="logout()" href="#/login">Logout</a></li>
+          <li class="{{login_class}}" data-match-route="/login"><a href="#/login">Login</a></li>
+          <li class="{{login_class}}" data-match-route="/register"><a href="#/register">Register</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div>
+    <div ng-view=""></div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p><span class="glyphicon glyphicon-heart"></span> from the iSCToolbox team</p>
+      </div>
+    </footer>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="bower_components/jstree/dist/jstree.min.js"></script>
+    <script src="bower_components/jstree-directive/jsTree.directive.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <!--<script src="bower_components/angular-touch/angular-touch.js"></script>-->
+    <script src="bower_components/tv4/tv4.js"></script>
+    <script src="bower_components/objectpath/lib/ObjectPath.js"></script>
+    <script src="bower_components/angular-schema-form/dist/schema-form.min.js"></script>
+    <script src="bower_components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.min.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+    <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src='bower_components/angular-loading-bar/build/loading-bar.min.js'></script>
+    <script src='bower_components/angular-scroll-glue/src/scrollglue.js'></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/browser.js"></script>
+        <script src="scripts/controllers/file-upload.js"></script>
+        <script src="scripts/controllers/viewer.js"></script>
+        <script src="scripts/services/shareddataservice.js"></script>
+        <script src="scripts/controllers/tools.js"></script>
+        <script src="scripts/services/gettools.js"></script>
+        <script src="scripts/services/filebrowser.js"></script>
+        <script src="scripts/services/saveas.min.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/register.js"></script>
+        <script src="scripts/controllers/console.js"></script>
+        <script src="scripts/controllers/toolbox.js"></script>
+        <script src="scripts/controllers/header.js"></script>
+        <script src="scripts/controllers/processmngmt.js"></script>
+        <script src="scripts/directives/ngconfirm.js"></script>
+        <script src="scripts/controllers/admin.js"></script>
+    <script src="scripts/controllers/customMsg.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
