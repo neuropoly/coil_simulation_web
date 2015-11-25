@@ -202,19 +202,20 @@ else:
 
     for j in range(int(nb_elem)):
         new_pos_x = create_wrapped_elem(rad_c, int(nb_elem))
+        print new_pos_x
 
     for coil in coils_list:
         arrays_list.append(coil.gen_array(coil_definition))
         coil.info()
 
-    rotated_array = np.zeros[:, :, nb_elem]
-    translated_array = np.zeros[:, :, nb_elem]
-
-    for k in range(int(nb_elem)):
-        rotated_array[:, :, k] = coil.rotation(arrays_list, new_pos_x, k, rad_c)
-
-    for l in range(int(nb_elem)):
-        translated_array[:, :, l] = coil.translation(rotated_array, new_pos_x, l, rad_c)
+    # rotated_array = np.zeros[:, :, nb_elem]
+    # translated_array = np.zeros[:, :, nb_elem]
+    #
+    # for k in range(int(nb_elem)):
+    #     rotated_array[:, :, k] = coil.rotation(arrays_list, new_pos_x, k, rad_c)
+    #
+    # for l in range(int(nb_elem)):
+    #     translated_array[:, :, l] = coil.translation(rotated_array, new_pos_x, l, rad_c)
 
 
 """Loop that naively ensures that the inputted axis are equal. To be modified later
@@ -234,6 +235,18 @@ while error:
     z_axis_min = input("Input minimum Z-axis value: ") * 0.01
     z_axis_max = input("Input maximum Z-axis value: ") * 0.01
     z_axis_prec = input("Input Z-axis precision: ") * 0.01
+
+    # x_axis_min = -10 * 0.01
+    # x_axis_max = 10 * 0.01
+    # x_axis_prec = 1 * 0.01
+    #
+    # y_axis_min = 0 * 0.01
+    # y_axis_max = 20 * 0.01
+    # y_axis_prec = 1 * 0.01
+    #
+    # z_axis_min = -10 * 0.01
+    # z_axis_max = 10 * 0.01
+    # z_axis_prec = 1 * 0.01
 
     if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
         print("PANIC: XZ PLAN AXISES NOT EQUAL. NEED TO BE EQUAL TO CONTINUE. RESTART...")
