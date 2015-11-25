@@ -58,12 +58,22 @@ axis_dict = {'Xmin': x_axis_min, 'Xmax': x_axis_max, 'Xprec': x_axis_prec,
     'Ymin': y_axis_min, 'Ymax': y_axis_max, 'Yprec': y_axis_prec,
     'Zmin': z_axis_min, 'Zmax': z_axis_max, 'Zprec': z_axis_prec}
 
+print "COIL ARRAY SHAPE :", coils_list[0].coil_array.shape
+
+"""rotation and translation"""
+for coil in coils_list:
+    rotated_coil = coil.rotation(10, coil.get_coil_array())
+    coil.set_coil_array(rotated_coil)
+#     translated_coil = coil.translation(10, coil.coil_array)
+#     coil.coil_array = translated_coil
+
 """This block generates each point of the coil in a 3-D space"""
 i=0
 for coil in coils_list:
-    arrays_list.append(coil.gen_array(coil_definition))
+    arrays_list.append(coil.get_coil_array())
     coil.info()
     i += 1
+
 
 """This block declares the matrix  for B1 and A and fills them with values returned
 by calc_field, which calculates with Biot-Savard the value of the magnetic field in
