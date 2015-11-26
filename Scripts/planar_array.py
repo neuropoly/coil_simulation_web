@@ -224,29 +224,29 @@ error = True
 
 while error:
     print "AXIS DEFINITION: "
-    # x_axis_min = input("Input minimum X-axis value: ") * 0.01
-    # x_axis_max = input("Input maximum X-axis value: ") * 0.01
-    # x_axis_prec = input("Input X-axis precision: ") * 0.01
+    x_axis_min = input("Input minimum X-axis value: ") * 0.01
+    x_axis_max = input("Input maximum X-axis value: ") * 0.01
+    x_axis_prec = input("Input X-axis precision: ") * 0.01
+
+    y_axis_min = input("Input minimum Y-axis value: ") * 0.01
+    y_axis_max = input("Input maximum Y-axis value: ") * 0.01
+    y_axis_prec = input("Input Y-axis precision: ") * 0.01
+
+    z_axis_min = input("Input minimum Z-axis value: ") * 0.01
+    z_axis_max = input("Input maximum Z-axis value: ") * 0.01
+    z_axis_prec = input("Input Z-axis precision: ") * 0.01
+
+    # x_axis_min = -10 * 0.01
+    # x_axis_max = 10 * 0.01
+    # x_axis_prec = 1 * 0.01
     #
-    # y_axis_min = input("Input minimum Y-axis value: ") * 0.01
-    # y_axis_max = input("Input maximum Y-axis value: ") * 0.01
-    # y_axis_prec = input("Input Y-axis precision: ") * 0.01
+    # y_axis_min = 0 * 0.01
+    # y_axis_max = 20 * 0.01
+    # y_axis_prec = 1 * 0.01
     #
-    # z_axis_min = input("Input minimum Z-axis value: ") * 0.01
-    # z_axis_max = input("Input maximum Z-axis value: ") * 0.01
-    # z_axis_prec = input("Input Z-axis precision: ") * 0.01
-
-    x_axis_min = -10 * 0.01
-    x_axis_max = 10 * 0.01
-    x_axis_prec = 1 * 0.01
-
-    y_axis_min = 0 * 0.01
-    y_axis_max = 20 * 0.01
-    y_axis_prec = 1 * 0.01
-
-    z_axis_min = -10 * 0.01
-    z_axis_max = 10 * 0.01
-    z_axis_prec = 1 * 0.01
+    # z_axis_min = -10 * 0.01
+    # z_axis_max = 10 * 0.01
+    # z_axis_prec = 1 * 0.01
 
     if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
         print("PANIC: XZ PLAN AXISES NOT EQUAL. NEED TO BE EQUAL TO CONTINUE. RESTART...")
