@@ -82,7 +82,7 @@ class Coil:
     def translation(self, radc, coil_rotated):
         Tx = self.posinix
         Ty = 0
-        Tz = radc - math.cos(math.asin(self.posinix/radc))*radc
+        Tz = radc - np.cos(np.asin(self.posinix/radc))*radc
         Tr = np.matrix([[1, 0, 0, Tx], [0, 1, 0, Ty], [0, 0, 1, Tz], [0, 0, 0, 1]])
 
         x = np.zeros(1, 3)

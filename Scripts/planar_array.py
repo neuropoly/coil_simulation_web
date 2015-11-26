@@ -202,7 +202,6 @@ else:
 
     for j in range(int(nb_elem)):
         new_pos_x = create_wrapped_elem(rad_c, int(nb_elem))
-        print new_pos_x
 
     for coil in coils_list:
         arrays_list.append(coil.gen_array(coil_definition))
