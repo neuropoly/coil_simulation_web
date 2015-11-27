@@ -61,10 +61,10 @@ class Coil:
     def coil_definition(self, value):
         self.coil_definition = value
 
-    def rotation(self, radc, coil_array):
-        theta = -(math.asin(self.posinix/radc))
+    def rotation(self, radc):
+        theta = -(np.arcsin(self.posinix/radc))
         """generate rotation matrix for Y axis"""
-        Ry = np.matrix([[math.cos(theta), 0, math.sin(theta)], [0, 1, 0], [-math.sin(theta), 0, math.cos(theta)]])
+        Ry = np.matrix([[np.cos(theta), 0, np.sin(theta)], [0, 1, 0], [-np.sin(theta), 0, np.cos(theta)]])
         # x = np.zeros((self.coil_definition, 1))
         # y = np.zeros((self.coil_definition, 1))
         # z = np.zeros((self.coil_definition, 1))
@@ -76,7 +76,7 @@ class Coil:
         # rotate = np.append(x,y,axis=1)
         # rotate = np.append(rotate,z,axis=1)
         # coil_rotated = np.zeros((self.coil_definition, 3))
-        coil_rotated = np.dot(coil_array, Ry)
+        coil_rotated = np.dot(self.coil_array, Ry)
         return coil_rotated
 
     def translation(self, radc, coil_rotated):

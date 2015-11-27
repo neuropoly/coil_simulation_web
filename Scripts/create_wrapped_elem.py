@@ -19,9 +19,9 @@ PI = math.pi
 def create_wrapped_elem(radc, ne):
     ang = np.linspace(-PI/2, PI/2, ne+2)
     size = np.shape(ang)
-    angelem = np.zeros(ne+2)
+    angelem = np.zeros(ne)
 
-    for i in range(2, size[0]):
+    for i in range(2, size[0]-1):
         angelem[i-1] = ang[i]
 
     newxpos = np.sin(angelem)*radc
