@@ -116,7 +116,7 @@ o = arguments['-o']
 o1 = arguments['-o1']
 orientation = arguments['-orientation']
 slice_location = arguments['-slice']
-coil_definition = arguments['-d']
+coil_definition = arguments['-definition']
 
 #coil_definition = 25  # Number of points in each coil
 
@@ -204,15 +204,20 @@ B1_tmp = np.zeros((x_len, y_len, z_len))
 A_tmp = np.zeros((x_len, y_len, z_len))
 
 bB1f = np.zeros((x_len, y_len, z_len))
+B1_tmp = np.zeros((x_len, y_len, z_len))
 
 """Sum of every contribution by each coil"""
 for i in range(nb_elem):
-    B1_tmp = np.zeros((x_len, y_len, z_len))
     B1_tmp, A_tmp = calc_field(arrays_list, axis_dict, i, coil_definition)
     bB1f = np.sqrt(np.power(bB1f, 2) + np.power(B1_tmp, 2))
 
-B1f = np.zeros((x_len, z_len))
-B1f[:, :] = bB1f[:, 1, :]
+if orientation == 1:
+    B1f = np.zeros((x_len, z_len))
+    B1f[:, :] = bB1f[:, slice_location, :]
+
+if orientation == 2:
+    B1f = np.zeros((x_len, y_len))
+    B1f[:, :] = bB1f[:, :, slice_location]
 
 """MatPlotLib calls to display the coils in 3-D"""
 plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
