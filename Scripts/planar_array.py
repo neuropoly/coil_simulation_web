@@ -215,7 +215,6 @@ else:
     #
     # for l in range(int(nb_elem)):
     #     translated_array[:, :, l] = coil.translation(rotated_array, new_pos_x, l, rad_c)
-
     for coil in coils_list:
         rotated_coil = coil.rotation(rad_c)
         coil.set_coil_array(rotated_coil)
@@ -223,6 +222,7 @@ else:
 for coil in coils_list:
     arrays_list.append(coil.gen_array(coil_definition))
     coil.info()
+
 
 
 """Loop that naively ensures that the inputted axis are equal. To be modified later
@@ -254,6 +254,18 @@ while error:
     z_axis_min = 0 * 0.01
     z_axis_max = 20 * 0.01
     z_axis_prec = 1 * 0.01
+
+    # x_axis_min = -10 * 0.01
+    # x_axis_max = 10 * 0.01
+    # x_axis_prec = 1 * 0.01
+    #
+    # y_axis_min = 0 * 0.01
+    # y_axis_max = 20 * 0.01
+    # y_axis_prec = 1 * 0.01
+    #
+    # z_axis_min = -10 * 0.01
+    # z_axis_max = 10 * 0.01
+    # z_axis_prec = 1 * 0.01
 
     if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
         print("PANIC: XZ PLAN AXISES NOT EQUAL. NEED TO BE EQUAL TO CONTINUE. RESTART...")
