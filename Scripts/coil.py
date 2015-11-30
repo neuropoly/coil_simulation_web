@@ -15,6 +15,16 @@ class Coil:
         self.rada = float(rada)
         self.radb = float(radb)
         self.coil_definition = int(coil_definition)
+        self.coil_array = self.gen_array(coil_definition)
+
+
+    """Setters and getters"""
+    """coil_array"""
+    def get_coil_array(self):
+        return self.coil_array
+
+    def set_coil_array(self, array):
+        self.coil_array = array
 
     """Defines the array of points, which is a 100 x 3 matrix, used to trace the B1 field
     and the coil itself."""
@@ -51,31 +61,28 @@ class Coil:
     def coil_definition(self, value):
         self.coil_definition = value
 
-    def rotation(self, radc, coil_array):
-        theta = -(math.asin(self.posinix/radc))
+    def rotation(self, radc):
+        theta = -(np.arcsin(self.posinix/radc))
         """generate rotation matrix for Y axis"""
-        Ry = np.matrix([[math.cos(theta), 0, math.sin(theta)], [0, 1, 0], [-math.sin(theta), 0, math.cos(theta)]])
-        x = np.zeros(1, 3)
-        y = np.zeros(1, 3)
-        z = np.zeros(1, 3)
-
-        for i in range(3):
-            x[i] = coil_array[1][i]
-            y[i] = coil_array[2][i]
-            z[i] = coil_array[3][i]
-
-        rotate = np.matrix([[x], [y], [z]])
-
-        coil_rotated = np.zeros(3, 3)
-
-        coil_rotated = np.dot(Ry, rotate)
-
+        Ry = np.matrix([[np.cos(theta), 0, np.sin(theta)], [0, 1, 0], [-np.sin(theta), 0, np.cos(theta)]])
+        # x = np.zeros((self.coil_definition, 1))
+        # y = np.zeros((self.coil_definition, 1))
+        # z = np.zeros((self.coil_definition, 1))
+        # for i in range(self.coil_definition):
+        #     x[i] = coil_array[i][0]
+        #     y[i] = coil_array[i][1]
+        #     z[i] = coil_array[i][2]
+        #
+        # rotate = np.append(x,y,axis=1)
+        # rotate = np.append(rotate,z,axis=1)
+        # coil_rotated = np.zeros((self.coil_definition, 3))
+        coil_rotated = np.dot(self.coil_array, Ry)
         return coil_rotated
 
     def translation(self, radc, coil_rotated):
         Tx = self.posinix
         Ty = 0
-        Tz = radc - math.cos(math.asin(self.posinix/radc))*radc
+        Tz = radc - np.cos(np.asin(self.posinix/radc))*radc
         Tr = np.matrix([[1, 0, 0, Tx], [0, 1, 0, Ty], [0, 0, 1, Tz], [0, 0, 0, 1]])
 
         x = np.zeros(1, 3)

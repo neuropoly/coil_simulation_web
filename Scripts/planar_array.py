@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from image_slice_B1 import image_slice_B1
 from plot_planar_array import plot_planar_array
+from create_wrapped_elem import create_wrapped_elem
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from scipy import math
 from mpl_toolkits.mplot3d import Axes3D
@@ -37,6 +38,13 @@ def get_parser():
                       type_value="float",
                       description="Determine radius b",
                       mandatory=True,
+                      example="1",
+                      default_value="3")
+
+    parser.add_option(name="-radc",
+                      type_value="float",
+                      description="Determine radius c of cylinder (for circular_array)",
+                      mandatory=False,
                       example="1",
                       default_value="3")
 
@@ -102,6 +110,13 @@ def get_parser():
                       mandatory=False,
                       example="water",
                       default_value="water")
+
+    parser.add_option(name="-type",
+                      type_value="int",
+                      description="Determine wanted simulation (Planar = 1, Circular = 2)",
+                      mandatory=True,
+                      example="1",
+                      default_value="1")
     return parser
 
 
@@ -110,6 +125,7 @@ parser = get_parser()
 arguments = parser.parse(sys.argv[1:])
 rad_a = arguments['-rada']
 rad_b = arguments['-radb']
+rad_c = arguments['-radc']
 r = arguments['-r']
 c = arguments['-c']
 o = arguments['-o']
@@ -117,14 +133,15 @@ o1 = arguments['-o1']
 orientation = arguments['-orientation']
 slice_location = arguments['-slice']
 coil_definition = arguments['-definition']
+type = arguments['-type']
 
-#coil_definition = 25  # Number of points in each coil
+# coil_definition = 25  # Number of points in each coil
 
 arrays_list = []
 coils_list = []
 preset_try = input("Do you want to use a preset? (1/0)")
 if preset_try == 1:
-    d = 0.75*2*rad_a
+    d = 0.75 * 2 * rad_a
     """60 deg = 1.0472 rad"""
     pytha_x = np.cos(1.0472)
     pytha_y = np.sin(1.0472)
@@ -142,10 +159,15 @@ if preset_try == 1:
         for j in range(c):
             coil = Coil((d * j + d_x) * 0.01, (d_y * i) * 0.01, 0, rad_a * 0.01, rad_b * 0.01, coil_definition)
             coils_list.append(coil)
-else:
+
+    for coil in coils_list:
+        arrays_list.append(coil.gen_array(coil_definition))
+        coil.info()
+
+elif type == 1:
     nb_elem = input("Input desired number of coils: ")
-    rad_a = input("Input radius 'a' (cm): ") * 0.01
-    rad_b = input("Input radius 'b' (cm): ") * 0.01
+    rad_a = rad_a * 0.01
+    rad_b = rad_b * 0.01
 
     """This block receives inputs from the user to define the coils and the axis system."""
     for i in range(int(nb_elem)):
@@ -156,23 +178,94 @@ else:
         coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
         coils_list.append(coil)
 
+    for coil in coils_list:
+        arrays_list.append(coil.gen_array(coil_definition))
+        coil.info()
+
+
+else:
+    nb_elem = input("Input desired number of coils: ")
+    rad_a = rad_a * 0.01
+    rad_b = rad_b * 0.01
+    rad_c = rad_c * 0.01
+
+    """This block receives inputs from the user to define the coils and the axis system."""
+    for i in range(int(nb_elem)):
+        print "Coil #", i
+        pos_ini_x = input("Input initial X-axis position: ") * 0.01
+        pos_ini_y = input("Input initial Y-axis position: ") * 0.01
+        pos_ini_z = input("Input initial Z-axis position: ") * 0.01
+        coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
+        coils_list.append(coil)
+
+    coil.pos_ini_x = 0
+
+    for j in range(int(nb_elem)):
+        new_pos_x = create_wrapped_elem(rad_c, int(nb_elem))
+
+    # for coil in coils_list:
+    #     arrays_list.append(coil.gen_array(coil_definition))
+    #     coil.info()
+    #
+    # rotated_array = np.zeros[:, :, nb_elem]
+    # translated_array = np.zeros[:, :, nb_elem]
+    #
+    # for k in range(int(nb_elem)):
+    #     rotated_array[:, :, k] = coil.rotation(arrays_list, new_pos_x, k, rad_c)
+    #
+    # for l in range(int(nb_elem)):
+    #     translated_array[:, :, l] = coil.translation(rotated_array, new_pos_x, l, rad_c)
+    for coil in coils_list:
+        rotated_coil = coil.rotation(rad_c)
+        coil.set_coil_array(rotated_coil)
+
+for coil in coils_list:
+    arrays_list.append(coil.gen_array(coil_definition))
+    coil.info()
+
+
+
 """Loop that naively ensures that the inputted axis are equal. To be modified later
    with the web interface"""
 error = True
 
 while error:
     print "AXIS DEFINITION: "
-    x_axis_min = input("Input minimum X-axis value: ") * 0.01
-    x_axis_max = input("Input maximum X-axis value: ") * 0.01
-    x_axis_prec = input("Input X-axis precision: ") * 0.01
+    # x_axis_min = input("Input minimum X-axis value: ") * 0.01
+    # x_axis_max = input("Input maximum X-axis value: ") * 0.01
+    # x_axis_prec = input("Input X-axis precision: ") * 0.01
+    #
+    # y_axis_min = input("Input minimum Y-axis value: ") * 0.01
+    # y_axis_max = input("Input maximum Y-axis value: ") * 0.01
+    # y_axis_prec = input("Input Y-axis precision: ") * 0.01
+    #
+    # z_axis_min = input("Input minimum Z-axis value: ") * 0.01
+    # z_axis_max = input("Input maximum Z-axis value: ") * 0.01
+    # z_axis_prec = input("Input Z-axis precision: ") * 0.01
 
-    y_axis_min = input("Input minimum Y-axis value: ") * 0.01
-    y_axis_max = input("Input maximum Y-axis value: ") * 0.01
-    y_axis_prec = input("Input Y-axis precision: ") * 0.01
+    x_axis_min = -10 * 0.01
+    x_axis_max = 10 * 0.01
+    x_axis_prec = 1 * 0.01
 
-    z_axis_min = input("Input minimum Z-axis value: ") * 0.01
-    z_axis_max = input("Input maximum Z-axis value: ") * 0.01
-    z_axis_prec = input("Input Z-axis precision: ") * 0.01
+    y_axis_min = 0 * 0.01
+    y_axis_max = 20 * 0.01
+    y_axis_prec = 1 * 0.01
+
+    z_axis_min = 0 * 0.01
+    z_axis_max = 20 * 0.01
+    z_axis_prec = 1 * 0.01
+
+    # x_axis_min = -10 * 0.01
+    # x_axis_max = 10 * 0.01
+    # x_axis_prec = 1 * 0.01
+    #
+    # y_axis_min = 0 * 0.01
+    # y_axis_max = 20 * 0.01
+    # y_axis_prec = 1 * 0.01
+    #
+    # z_axis_min = -10 * 0.01
+    # z_axis_max = 10 * 0.01
+    # z_axis_prec = 1 * 0.01
 
     if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
         print("PANIC: XZ PLAN AXISES NOT EQUAL. NEED TO BE EQUAL TO CONTINUE. RESTART...")
@@ -186,12 +279,8 @@ axis_dict = {'Xmin': x_axis_min, 'Xmax': x_axis_max, 'Xprec': x_axis_prec,
              'Ymin': y_axis_min, 'Ymax': y_axis_max, 'Yprec': y_axis_prec,
              'Zmin': z_axis_min, 'Zmax': z_axis_max, 'Zprec': z_axis_prec}
 
-"""This block generates each point of the coil in a 3-D space"""
-i = 0
-for coil in coils_list:
-    arrays_list.append(coil.gen_array(coil_definition))
-    coil.info()
-    i += 1
+print "COIL ARRAY SHAPE :", coils_list[0].coil_array.shape
+
 
 """This block declares the matrix  for B1 and A and fills them with values returned
 by calc_field, which calculates with Biot-Savard the value of the magnetic field in
@@ -223,5 +312,7 @@ if orientation == 2:
 plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
 
 image_slice_B1(B1f, axis_dict, o)
+
+print B1f
 
 plt.show()
