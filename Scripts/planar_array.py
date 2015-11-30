@@ -185,9 +185,9 @@ elif type == 1:
 
 else:
     nb_elem = input("Input desired number of coils: ")
-    rad_a = rad_a * 0.01
-    rad_b = rad_b * 0.01
-    rad_c = rad_c * 0.01
+    rad_a *= 0.01
+    rad_b *= 0.01
+    rad_c *= 0.01
 
     """This block receives inputs from the user to define the coils and the axis system."""
     for i in range(int(nb_elem)):
@@ -254,18 +254,6 @@ while error:
     z_axis_min = 0 * 0.01
     z_axis_max = 20 * 0.01
     z_axis_prec = 1 * 0.01
-
-    # x_axis_min = -10 * 0.01
-    # x_axis_max = 10 * 0.01
-    # x_axis_prec = 1 * 0.01
-    #
-    # y_axis_min = 0 * 0.01
-    # y_axis_max = 20 * 0.01
-    # y_axis_prec = 1 * 0.01
-    #
-    # z_axis_min = -10 * 0.01
-    # z_axis_max = 10 * 0.01
-    # z_axis_prec = 1 * 0.01
 
     if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
         print("PANIC: XZ PLAN AXISES NOT EQUAL. NEED TO BE EQUAL TO CONTINUE. RESTART...")
