@@ -181,9 +181,9 @@ elif type == 1:
 
 else:
     nb_elem = input("Input desired number of coils: ")
-    rad_a = rad_a * 0.01
-    rad_b = rad_b * 0.01
-    rad_c = rad_c * 0.01
+    rad_a *= 0.01
+    rad_b *= 0.01
+    rad_c *= 0.01
 
     """This block receives inputs from the user to define the coils and the axis system."""
     for i in range(int(nb_elem)):
@@ -253,18 +253,6 @@ while error:
     z_axis_max = 20 * 0.01
     z_axis_prec = 1 * 0.01
 
-    # x_axis_min = -10 * 0.01
-    # x_axis_max = 10 * 0.01
-    # x_axis_prec = 1 * 0.01
-    #
-    # y_axis_min = 0 * 0.01
-    # y_axis_max = 20 * 0.01
-    # y_axis_prec = 1 * 0.01
-    #
-    # z_axis_min = -10 * 0.01
-    # z_axis_max = 10 * 0.01
-    # z_axis_prec = 1 * 0.01
-
     if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
         print("PANIC: XZ PLAN AXISES NOT EQUAL. NEED TO BE EQUAL TO CONTINUE. RESTART...")
         error = True
@@ -291,15 +279,20 @@ B1_tmp = np.zeros((x_len, y_len, z_len))
 A_tmp = np.zeros((x_len, y_len, z_len))
 
 bB1f = np.zeros((x_len, y_len, z_len))
+B1_tmp = np.zeros((x_len, y_len, z_len))
 
 """Sum of every contribution by each coil"""
 for i in range(nb_elem):
-    B1_tmp = np.zeros((x_len, y_len, z_len))
     B1_tmp, A_tmp = calc_field(arrays_list, axis_dict, i, coil_definition)
     bB1f = np.sqrt(np.power(bB1f, 2) + np.power(B1_tmp, 2))
 
-B1f = np.zeros((x_len, z_len))
-B1f[:, :] = bB1f[:, 1, :]
+if orientation == 1:
+    B1f = np.zeros((x_len, z_len))
+    B1f[:, :] = bB1f[:, slice_location, :]
+
+if orientation == 2:
+    B1f = np.zeros((x_len, y_len))
+    B1f[:, :] = bB1f[:, :, slice_location]
 
 """MatPlotLib calls to display the coils in 3-D"""
 plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
