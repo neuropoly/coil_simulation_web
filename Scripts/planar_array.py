@@ -178,10 +178,6 @@ elif type == 1:
         coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
         coils_list.append(coil)
 
-    for coil in coils_list:
-        arrays_list.append(coil.gen_array(coil_definition))
-        coil.info()
-
 
 else:
     nb_elem = input("Input desired number of coils: ")
@@ -198,10 +194,8 @@ else:
         coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
         coils_list.append(coil)
 
-    coil.pos_ini_x = 0
-
     for j in range(int(nb_elem)):
-        new_pos_x = create_wrapped_elem(rad_c, int(nb_elem))
+         coils_list[j].posinix = create_wrapped_elem(rad_c, int(nb_elem))[j]
 
     # for coil in coils_list:
     #     arrays_list.append(coil.gen_array(coil_definition))
@@ -216,13 +210,17 @@ else:
     # for l in range(int(nb_elem)):
     #     translated_array[:, :, l] = coil.translation(rotated_array, new_pos_x, l, rad_c)
     for coil in coils_list:
-        rotated_coil = coil.rotation(rad_c)
-        coil.set_coil_array(rotated_coil)
+        coil.rotation(rad_c)
+
+    for coil in coils_list:
+        coil_translated = coil.translation(rad_c)
+        coil.coil_array = coil_translated
+
+
 
 for coil in coils_list:
-    arrays_list.append(coil.gen_array(coil_definition))
+    arrays_list.append(coil.coil_array)
     coil.info()
-
 
 
 """Loop that naively ensures that the inputted axis are equal. To be modified later
@@ -308,6 +306,6 @@ plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
 
 image_slice_B1(B1f, axis_dict, o)
 
-print B1f
+# print B1f
 
 plt.show()

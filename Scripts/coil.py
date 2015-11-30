@@ -64,43 +64,55 @@ class Coil:
     def rotation(self, radc):
         theta = -(np.arcsin(self.posinix/radc))
         """generate rotation matrix for Y axis"""
-        Ry = np.matrix([[np.cos(theta), 0, np.sin(theta)], [0, 1, 0], [-np.sin(theta), 0, np.cos(theta)]])
+        Ry = np.array([[np.cos(theta), 0, np.sin(theta)], [0, 1, 0], [-np.sin(theta), 0, np.cos(theta)]])
+        Ry_matrix = np.asmatrix(Ry)
+        coil_array_matrix = np.asmatrix(self.coil_array)
+        coil_array_matrix = np.transpose(coil_array_matrix)
+        coil_rotated_matrix = Ry_matrix * coil_array_matrix
+        coil_rotated_matrix = np.transpose(coil_rotated_matrix)
+        coil_rotated = np.squeeze(np.asarray(coil_rotated_matrix))
+        self.coil_array = coil_rotated
+
+    def translation(self, radc):
+        Tx = self.posinix
+        Ty = 0
+        Tz = radc - np.cos(np.arcsin(self.posinix/radc))*radc
+        Tr = np.array([[1, 0, 0, Tx], [0, 1, 0, Ty], [0, 0, 1, Tz], [0, 0, 0, 1]])
+        print "Tr is"
+        print Tr
+
         # x = np.zeros((self.coil_definition, 1))
         # y = np.zeros((self.coil_definition, 1))
         # z = np.zeros((self.coil_definition, 1))
-        # for i in range(self.coil_definition):
-        #     x[i] = coil_array[i][0]
-        #     y[i] = coil_array[i][1]
-        #     z[i] = coil_array[i][2]
         #
-        # rotate = np.append(x,y,axis=1)
-        # rotate = np.append(rotate,z,axis=1)
-        # coil_rotated = np.zeros((self.coil_definition, 3))
-        coil_rotated = np.dot(self.coil_array, Ry)
-        return coil_rotated
+        # for i in range(self.coil_definition):
+        #     x[i] = self.coil_array[i][0]
+        #     y[i] = self.coil_array[i][1]
+        #     z[i] = self.coil_array[i][2]
 
-    def translation(self, radc, coil_rotated):
-        Tx = self.posinix
-        Ty = 0
-        Tz = radc - np.cos(np.asin(self.posinix/radc))*radc
-        Tr = np.matrix([[1, 0, 0, Tx], [0, 1, 0, Ty], [0, 0, 1, Tz], [0, 0, 0, 1]])
+        lf = np.ones(self.coil_definition)
+        lf = lf * 0.01
+        # x = self.coil_array[:,0]
+        # y = self.coil_array[:,1]
+        # z = self.coil_array[:,2]
+        # temp = np.matrix([[x], [y], [z], [lf]])
+        temp = self.coil_array.reshape(25,3)
+        temp = np.insert(temp, 3, 1, axis=1)
+        temp_matrix = np.asmatrix(temp)
+        Tr_matrix = np.asmatrix(Tr)
+        print "COIL ARRAY BEFORE TRANSLATION"
+        print temp_matrix
+        # coil_translated = np.zeros(4, 4)
+        temp_matrix = np.transpose(temp_matrix)
+        coil_translated_matrix =  Tr_matrix * temp_matrix
+        # for i in range(self.coil_definition-1,(self.coil_definition-self.coil_definition/5)-1,-1):
+        # for i in range(24,20,-1):
+        #     print i
+        #     coil_translated = np.delete(coil_translated, i, 0)
 
-        x = np.zeros(1, 3)
-        y = np.zeros(1, 3)
-        z = np.zeros(1, 3)
-
-        for i in range(3):
-            x[i] = coil_rotated[1][i]
-            y[i] = coil_rotated[2][i]
-            z[i] = coil_rotated[3][i]
-
-        size = np.shape(coil_rotated)
-        """size(1) = columns size of coil_rotated"""
-        lf = np.ones(1, size(1))
-
-        temp = np.matrix([[x], [y], [z], [lf]])
-
-        coil_translated = np.zeros(4, 4)
-        coil_translated = np.dot(Tr, temp)
-
+        coil_translated_matrix = np.transpose(coil_translated_matrix)
+        coil_translated_matrix = np.delete(coil_translated_matrix, 3, 1)
+        print "TRANSLATED MINUS 0.01 "
+        coil_translated = np.squeeze(np.asarray(coil_translated_matrix))
+        print coil_translated
         return coil_translated

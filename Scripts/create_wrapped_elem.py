@@ -19,7 +19,7 @@ def create_wrapped_elem(radc, ne):
     angelem = np.zeros(ne)
 
 
-    for i in range(2, size[0]-1):
+    for i in range(1, size[0]-1):
         angelem[i-1] = ang[i]
 
     newxpos = np.sin(angelem)*radc
