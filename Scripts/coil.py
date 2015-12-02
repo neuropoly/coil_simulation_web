@@ -34,7 +34,7 @@ class Coil:
         t = -PI/2
 
         for i in range(N):
-            x_coord = 0+self.rada*math.cos(t)
+            x_coord = self.posinix+self.rada*math.cos(t)
             y_coord = self.posiniy+self.radb*math.sin(t)
             z_coord = self.posiniz
 

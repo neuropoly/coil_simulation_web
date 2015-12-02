@@ -160,9 +160,15 @@ if preset_try == 1:
             coil = Coil((d * j + d_x) * 0.01, (d_y * i) * 0.01, 0, rad_a * 0.01, rad_b * 0.01, coil_definition)
             coils_list.append(coil)
 
+    for j in range(int(nb_elem)):
+        coils_list[j].posinix = create_wrapped_elem(rad_c, int(nb_elem))[j]
+
     for coil in coils_list:
-        arrays_list.append(coil.gen_array(coil_definition))
-        coil.info()
+        coil.rotation(rad_c)
+
+    for coil in coils_list:
+        coil_translated = coil.translation(rad_c)
+        coil.coil_array = coil_translated
 
 elif type == 1:
     nb_elem = input("Input desired number of coils: ")
@@ -216,8 +222,6 @@ else:
         coil_translated = coil.translation(rad_c)
         coil.coil_array = coil_translated
 
-
-
 for coil in coils_list:
     arrays_list.append(coil.coil_array)
     coil.info()
@@ -249,8 +253,8 @@ while error:
     y_axis_max = 20 * 0.01
     y_axis_prec = 1 * 0.01
 
-    z_axis_min = 0 * 0.01
-    z_axis_max = 20 * 0.01
+    z_axis_min = -10 * 0.01
+    z_axis_max = 10 * 0.01
     z_axis_prec = 1 * 0.01
 
     if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
