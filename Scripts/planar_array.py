@@ -113,10 +113,17 @@ def get_parser():
 
     parser.add_option(name="-type",
                       type_value="int",
-                      description="Determine wanted simulation (Planar = 1, Circular = 2)",
+                      description="Determine wanted simulation (1 = Planar, 2 = Circular)",
                       mandatory=True,
                       example="1",
                       default_value="1")
+
+    parser.add_option(name="-preset",
+                      type_value="int",
+                      description="Determine wanted simulation preset (0 = No preset, 1 = Preset)",
+                      mandatory=True,
+                      example="1",
+                      default_value="0")
     return parser
 
 
@@ -134,13 +141,17 @@ orientation = arguments['-orientation']
 slice_location = arguments['-slice']
 coil_definition = arguments['-definition']
 type = arguments['-type']
+preset = arguments['-preset']
 
 # coil_definition = 25  # Number of points in each coil
 
 arrays_list = []
 coils_list = []
-preset_try = input("Do you want to use a preset? (1/0)")
-if preset_try == 1:
+
+if preset == 1:
+    rad_a = rad_a * 0.01
+    rad_b = rad_b * 0.01
+    rad_c = rad_c * 0.01
     d = 0.75 * 2 * rad_a
     """60 deg = 1.0472 rad"""
     pytha_x = np.cos(1.0472)
@@ -157,18 +168,19 @@ if preset_try == 1:
         else:
             d_x = d * pytha_x
         for j in range(c):
-            coil = Coil((d * j + d_x) * 0.01, (d_y * i) * 0.01, 0, rad_a * 0.01, rad_b * 0.01, coil_definition)
+            coil = Coil((d * j + d_x), (d_y * i), 0, rad_a, rad_b, coil_definition)
             coils_list.append(coil)
 
-    for j in range(int(nb_elem)):
-        coils_list[j].posinix = create_wrapped_elem(rad_c, int(nb_elem))[j]
+    if type == 2:
+        for j in range(int(nb_elem)):
+            coils_list[j].posinix = create_wrapped_elem(rad_c, int(nb_elem))[j]
 
-    for coil in coils_list:
-        coil.rotation(rad_c)
+        for coil in coils_list:
+            coil.rotation(rad_c)
 
-    for coil in coils_list:
-        coil_translated = coil.translation(rad_c)
-        coil.coil_array = coil_translated
+        for coil in coils_list:
+            coil_translated = coil.translation(rad_c)
+            coil.coil_array = coil_translated
 
 elif type == 1:
     nb_elem = input("Input desired number of coils: ")

@@ -30,7 +30,7 @@ class Coil:
     and the coil itself."""
 
     def gen_array(self, N):
-        coil_array = np.array([[0.0 for j in range(3)] for j in range(N)]) # columns then lines
+        coil_array = np.array([[0.0 for j in range(3)] for j in range(N)]) # columns then rows
         t = -PI/2
 
         for i in range(N):
@@ -96,7 +96,7 @@ class Coil:
         # y = self.coil_array[:,1]
         # z = self.coil_array[:,2]
         # temp = np.matrix([[x], [y], [z], [lf]])
-        temp = self.coil_array.reshape(25,3)
+        temp = self.coil_array.reshape(self.coil_definition, 3)
         temp = np.insert(temp, 3, 1, axis=1)
         temp_matrix = np.asmatrix(temp)
         Tr_matrix = np.asmatrix(Tr)
@@ -104,7 +104,7 @@ class Coil:
         print temp_matrix
         # coil_translated = np.zeros(4, 4)
         temp_matrix = np.transpose(temp_matrix)
-        coil_translated_matrix =  Tr_matrix * temp_matrix
+        coil_translated_matrix = Tr_matrix * temp_matrix
         # for i in range(self.coil_definition-1,(self.coil_definition-self.coil_definition/5)-1,-1):
         # for i in range(24,20,-1):
         #     print i
