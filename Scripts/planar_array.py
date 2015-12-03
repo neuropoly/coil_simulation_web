@@ -1,5 +1,7 @@
 import sys
 from coil import Coil
+from calc_R import calc_R
+from calc_SNR import calc_SNR
 from phantom import Phantom
 from calc_field import calc_field
 from msct_parser import Parser
@@ -297,6 +299,8 @@ A_tmp = np.zeros((x_len, y_len, z_len))
 bB1f = np.zeros((x_len, y_len, z_len))
 B1_tmp = np.zeros((x_len, y_len, z_len))
 
+
+
 """Sum of every contribution by each coil"""
 for i in range(nb_elem):
     B1_tmp, A_tmp = calc_field(arrays_list, axis_dict, i, coil_definition)
@@ -309,6 +313,10 @@ if orientation == 1:
 if orientation == 2:
     B1f = np.zeros((x_len, y_len))
     B1f[:, :] = bB1f[:, :, slice_location]
+
+R = calc_R(A_tmp, nb_elem, rad_c, axis_dict)
+
+# SNR = calc_SNR(B1_tmp, nb_elem, R, axis_dict)
 
 """MatPlotLib calls to display the coils in 3-D"""
 plot_planar_array(nb_elem, arrays_list, coil_definition, o1)

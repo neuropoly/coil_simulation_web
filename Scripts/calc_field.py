@@ -67,6 +67,14 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition):
                     b1y_sum[a, b, c] = b1y_sum[a, b, c] + b1y_tmp
                     b1z_sum[a, b, c] = b1z_sum[a, b, c] + b1z_tmp
 
+                    ax_tmp = np.divide(I*u0, 4*PI*np.power(norm, 3))
+                    ay_tmp = np.divide(I*u0, 4*PI*np.power(norm, 3))
+                    az_tmp = np.divide(I*u0, 4*PI*np.power(norm, 3))
+
+                    ax_sum[a, b, c] = ax_sum[a, b, c] + ax_tmp
+                    ay_sum[a, b, c] = ay_sum[a, b, c] + ay_tmp
+                    az_sum[a, b, c] = az_sum[a, b, c] + az_tmp
+
     b1 = np.sqrt(np.power(b1x_sum, 2) + np.power(b1y_sum, 2) + np.power(b1z_sum, 2))
     a = np.sqrt(np.power(ax_sum, 2) + np.power(ay_sum, 2) + np.power(az_sum, 2))
 
