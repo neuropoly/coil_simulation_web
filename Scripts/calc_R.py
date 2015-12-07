@@ -1,13 +1,6 @@
-# coding=utf-8
-# function [R]=calc_R(A,ne,radc,xpmin,xpmax,px,ypmin,ypmax,py,zpmin,zpmax,pz)
-#
-#
-# This function calculates the mutual impedence caused by sample
-# A = magnetic potential vector
-# ne = number of elements
-# radc = cylinder radius
-# xpmin,xpmax,px,ypmin,ypmax,py,zpmin,zpmax,pz = request limits and precision 
-# R = matrix 2-D
+
+"""This function calculates the mutual impedence caused by sample"""
+
 
 import numpy as np
 from scipy import math
@@ -22,6 +15,7 @@ cond = 0.7  # define conductivity
 freq = 123.2 * 10 ** 6  # define frequency
 omega = 2 * PI * freq  # define omega
 
+
 """This function computes the B1 magnetic field and magentic potential vector"""
 
 
@@ -34,8 +28,6 @@ def calc_R(A, ne, radc, axis_dict):
     y_sample = np.zeros(y_len)
     z_sample = np.zeros(z_len)
 
-
-
     for i in range(x_len):
         x_sample[i] = axis_dict['Xmin'] + i * axis_dict['Xprec']
     for i in range(y_len):
@@ -43,9 +35,10 @@ def calc_R(A, ne, radc, axis_dict):
     for i in range(z_len):
         z_sample[i] = axis_dict['Zmin'] + i * axis_dict['Zprec']
 
-    #Msk(1:size(xsample),1,1:size(zsample))=ones
+
     Msk = np.ones((x_len,  1, z_len))
-    # size(1) = dimension du deuxième element de Msk
+
+    # size(1) = Dimension of second element of mask
     size_msk = np.shape(Msk)
     size_xs = np.shape(x_sample)
     size_zs = np.shape(z_sample)
@@ -71,18 +64,8 @@ def calc_R(A, ne, radc, axis_dict):
                     g[i, j] = 0
 
         Mskf = Mskd * g
-    """
-        h=1
-        size_mskf = np.shape(Mskf)
-        for i in size_mskf:
-            for j in size_mskf(1):
-                if  Mskf[i,j]!=0:
-                    Xprec(h)=i
-                    Yprec(h)=j
-                    h=h+1
-    """
 
-    # compute R
+    """compute R"""
     R = np.zeros((ne, ne))
     for i in range(ne):
         for j in range(ne):
@@ -92,7 +75,7 @@ def calc_R(A, ne, radc, axis_dict):
             cAi = Ai * Mskf
             cAj = Aj * Mskf
             result = cAj * cAi
-            # integrate over mask
+            """integrate over mask"""
             R[i][j] = cond * (omega ** 2) * (sum((sum(result))))
 
     return R

@@ -1,3 +1,5 @@
+"""Thia function display the magnetic field"""
+
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import numpy as np
@@ -6,10 +8,7 @@ __author__ = 'Pier-Luc'
 
 
 def image_slice_B1(B1f, axis_dict, output_file):
-    # x_len = np.size(B1f,1)
-    # z_len = np.size(B1f,2)
-    # print("x length :", x_len)
-    # print("z length :", z_len)
+
     B1_flipped = np.zeros(B1f.shape)
     B1f = np.transpose(B1f)
     top = np.size(B1f, 1) - 1
@@ -28,4 +27,3 @@ def image_slice_B1(B1f, axis_dict, output_file):
     cbar = fig.colorbar(img, cax=cax)
     cbar.ax.set_ylabel('[Tesla]', labelpad=20)
     plt.savefig(output_file)
-    # plt.show()

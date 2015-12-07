@@ -1,4 +1,5 @@
 import sys
+import time
 from coil import Coil
 from calc_R import calc_R
 from calc_SNR import calc_SNR
@@ -29,27 +30,80 @@ def get_parser():
                                  " This magnetic field is then showed to the user as a "
                                  "slice with field intensity. The user can also display"
                                  " the coils.")
-
+    parser.usage.addSection('Coils definitions:')
     parser.add_option(name="-rada",
                       type_value="float",
-                      description="Determine radius a",
+                      description="Determine radius a in cm",
                       mandatory=True,
                       example="1",
                       default_value="3")
 
     parser.add_option(name="-radb",
                       type_value="float",
-                      description="Determine radius b",
+                      description="Determine radius b in cm",
                       mandatory=True,
                       example="1",
                       default_value="3")
 
     parser.add_option(name="-radc",
                       type_value="float",
-                      description="Determine radius c of cylinder (for circular_array)",
+                      description="Determine if array is cylindrical by giving it a radius (in cm, has to be larger dans coil radius)",
                       mandatory=False,
                       example="1",
-                      default_value="3")
+                      default_value="0")
+
+    parser.add_option(name="-definition",
+                      type_value="int",
+                      description="Coil definition (number of points or each coil)",
+                      mandatory=True,
+                      example="100",
+                      default_value='100')
+
+    parser.usage.addSection('Ouput files:')
+    parser.add_option(name="-o",
+                      type_value="file_output",
+                      description="Magnetic field file",
+                      mandatory=True,
+                      example="b1_field.png",
+                      default_value="b1_field.png")
+
+    parser.add_option(name="-o1",
+                      type_value="file_output",
+                      description="Coils array file",
+                      mandatory=True,
+                      example="coils.png",
+                      default_value="coils_array.png")
+
+    parser.usage.addSection('Magnetic slice definition:')
+    parser.add_option(name="-orientation",
+                      type_value="int",
+                      description="Determine which plane the slice will be taken in (1 for XZ, 2 for XY)",
+                      mandatory=True,
+                      example="1",
+                      default_value='1')
+
+    parser.add_option(name="-slice",
+                      type_value="int",
+                      description="Determines the location of the slice in the corresponding axis, depending on orientation (either Y axis or Z axis)",
+                      mandatory=True,
+                      example="5",
+                      default_value='0')
+
+    parser.usage.addSection('Material definitions:')
+    parser.add_option(name="-m",
+                      type_value="material",
+                      description="Material to be analyzed (phantom)",
+                      mandatory=False,
+                      example="water",
+                      default_value="water")
+
+    parser.usage.addSection('Preset definitions:')
+    parser.add_option(name="-preset",
+                      type_value="int",
+                      description="Determine wanted simulation preset (0 = No preset, 1 = Preset)",
+                      mandatory=True,
+                      example="1",
+                      default_value="0")
 
     parser.add_option(name="-r",
                       type_value="int",
@@ -65,68 +119,6 @@ def get_parser():
                       example="1",
                       default_value="1")
 
-    parser.add_option(name="-o",
-                      type_value="file_output",
-                      description="Magnetic field file",
-                      mandatory=True,
-                      example="b1_field.png",
-                      default_value='')
-
-    parser.add_option(name="-o1",
-                      type_value="file_output",
-                      description="Coils array file",
-                      mandatory=True,
-                      example="coils.png",
-                      default_value='')
-
-    parser.add_option(name="-definition",
-                      type_value="int",
-                      description="Coil definition (number of points)",
-                      mandatory=True,
-                      example="100",
-                      default_value='100')
-
-    parser.add_option(name="-orientation",
-                      type_value="int",
-                      description="Determine which plane the slice will be taken in (1 for XZ, 2 for XY)",
-                      mandatory=True,
-                      example="1",
-                      default_value='1')
-
-    parser.add_option(name="-slice",
-                      type_value="int",
-                      description="Determines the location of the slice in the corresponding plane",
-                      mandatory=True,
-                      example="5",
-                      default_value='0')
-
-    parser.add_option(name="-radius",
-                      type_value="int",
-                      description="Determine if array is cylindrical by giving it a radius (in cm)",
-                      mandatory=False,
-                      example="3",
-                      default_value="0")
-
-    parser.add_option(name="-m",
-                      type_value="material",
-                      description="Material to be analyzed (phantom)",
-                      mandatory=False,
-                      example="water",
-                      default_value="water")
-
-    parser.add_option(name="-type",
-                      type_value="int",
-                      description="Determine wanted simulation (1 = Planar, 2 = Circular)",
-                      mandatory=True,
-                      example="1",
-                      default_value="1")
-
-    parser.add_option(name="-preset",
-                      type_value="int",
-                      description="Determine wanted simulation preset (0 = No preset, 1 = Preset)",
-                      mandatory=True,
-                      example="1",
-                      default_value="0")
     return parser
 
 
@@ -143,7 +135,6 @@ o1 = arguments['-o1']
 orientation = arguments['-orientation']
 slice_location = arguments['-slice']
 coil_definition = arguments['-definition']
-type = arguments['-type']
 preset = arguments['-preset']
 
 arrays_list = []
@@ -151,9 +142,8 @@ coils_list = []
 
 """Preset, number of coil according to lines and columns"""
 if preset == 1:
-    rad_a = rad_a * 0.01
-    rad_b = rad_b * 0.01
-    rad_c = rad_c * 0.01
+    rad_a *= 0.01
+    rad_b *= 0.01
     d = 0.75 * 2 * rad_a
     """60 deg = 1.0472 rad"""
     pytha_x = np.cos(1.0472)
@@ -175,8 +165,9 @@ if preset == 1:
             coils_list.append(coil)
 
     """If preset on a cylinder"""
-    if type == 2:
-        for j in range(int(nb_elem)):
+    if rad_c != "0":
+        rad_c *= 0.01
+        for j in range(nb_elem):
             coils_list[j].posinix = create_wrapped_elem(rad_c, int(nb_elem))[j]
 
         for coil in coils_list:
@@ -186,23 +177,8 @@ if preset == 1:
             coil_translated = coil.translation(rad_c)
             coil.coil_array = coil_translated
 
-    """Coils on plan"""
-elif type == 1:
-    nb_elem = input("Input desired number of coils: ")
-    rad_a = rad_a * 0.01
-    rad_b = rad_b * 0.01
-
-    """This block receives inputs from the user to define the coils and the axis system."""
-    for i in range(int(nb_elem)):
-        print "Coil #", i
-        pos_ini_x = input("Input initial X-axis position: ") * 0.01
-        pos_ini_y = input("Input initial Y-axis position: ") * 0.01
-        pos_ini_z = input("Input initial Z-axis position: ") * 0.01
-        coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
-        coils_list.append(coil)
-
     """Coils on a cylinder"""
-else:
+elif rad_c != "0":
     nb_elem = input("Input desired number of coils: ")
     rad_a *= 0.01
     rad_b *= 0.01
@@ -227,42 +203,47 @@ else:
         coil_translated = coil.translation(rad_c)
         coil.coil_array = coil_translated
 
+    """Coils on plan"""
+else:
+    nb_elem = input("Input desired number of coils: ")
+    rad_a *= 0.01
+    rad_b *= 0.01
+
+    """This block receives inputs from the user to define the coils and the axis system."""
+    for i in range(int(nb_elem)):
+        print "Coil #", i
+        pos_ini_x = input("Input initial X-axis position: ") * 0.01
+        pos_ini_y = input("Input initial Y-axis position: ") * 0.01
+        pos_ini_z = input("Input initial Z-axis position: ") * 0.01
+        coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
+        coils_list.append(coil)
+
+
 for coil in coils_list:
     arrays_list.append(coil.coil_array)
     coil.info()
 
 
-"""Loop that naively ensures that the inputted axis are equal. To be modified later
-   with the web interface"""
-error = True
+"""Axis definition"""
 
-while error:
-    print "AXIS DEFINITION: "
-    x_axis_min = input("Input minimum X-axis value: ") * 0.01
-    x_axis_max = input("Input maximum X-axis value: ") * 0.01
-    x_axis_prec = input("Input X-axis precision: ") * 0.01
+x_axis_min = -10 * 0.01
+x_axis_max = 10 * 0.01
+x_axis_prec = 1 * 0.01
 
-    y_axis_min = input("Input minimum Y-axis value: ") * 0.01
-    y_axis_max = input("Input maximum Y-axis value: ") * 0.01
-    y_axis_prec = input("Input Y-axis precision: ") * 0.01
+y_axis_min = 0 * 0.01
+y_axis_max = 20 * 0.01
+y_axis_prec = 1 * 0.01
 
-    z_axis_min = input("Input minimum Z-axis value: ") * 0.01
-    z_axis_max = input("Input maximum Z-axis value: ") * 0.01
-    z_axis_prec = input("Input Z-axis precision: ") * 0.01
+z_axis_min = -10 * 0.01
+z_axis_max = 10 * 0.01
+z_axis_prec = 1 * 0.01
 
-    if x_axis_max - x_axis_min != z_axis_max - z_axis_min:
-        print("PANIC: XZ PLAN AXISES NOT EQUAL. NEED TO BE EQUAL TO CONTINUE. RESTART...")
-        error = True
-    else:
-        print("SUCCESSFUL AXIS DEFINITION. BRAVO.")
-        error = False
 
 """Structure simplifying the passing of axis dimensions as arguments to other functions"""
 axis_dict = {'Xmin': x_axis_min, 'Xmax': x_axis_max, 'Xprec': x_axis_prec,
              'Ymin': y_axis_min, 'Ymax': y_axis_max, 'Yprec': y_axis_prec,
              'Zmin': z_axis_min, 'Zmax': z_axis_max, 'Zprec': z_axis_prec}
 
-print "COIL ARRAY SHAPE :", coils_list[0].coil_array.shape
 
 """This block declares the matrix  for B1 and A and fills them with values returned
 by calc_field, which calculates with Biot-Savard the value of the magnetic field in
@@ -277,11 +258,17 @@ A_tmp = np.zeros((x_len, y_len, z_len))
 bB1f = np.zeros((x_len, y_len, z_len))
 B1_tmp = np.zeros((x_len, y_len, z_len))
 
-
 """Sum of every contribution by each coil"""
+i = 0
+sys.stdout.write("\r%d%%" % i)
+sys.stdout.flush()
 for i in range(nb_elem):
+    time.sleep(1)
+    count = (i+1)*(100/nb_elem)
     B1_tmp, A_tmp = calc_field(arrays_list, axis_dict, i, coil_definition)
     bB1f = np.sqrt(np.power(bB1f, 2) + np.power(B1_tmp, 2))
+    sys.stdout.write("\r%d%%" % count)
+    sys.stdout.flush()
 
 if orientation == 1:
     B1f = np.zeros((x_len, z_len))
@@ -292,7 +279,7 @@ if orientation == 2:
     B1f[:, :] = bB1f[:, :, slice_location]
 
 """Compute signal noise"""
-R = calc_R(A_tmp, nb_elem, rad_c, axis_dict)
+# R = calc_R(A_tmp, nb_elem, rad_c, axis_dict)
 
 # SNR = calc_SNR(B1_tmp, nb_elem, R, axis_dict)
 
@@ -302,3 +289,4 @@ plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
 image_slice_B1(B1f, axis_dict, o)
 
 plt.show()
+

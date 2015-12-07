@@ -1,10 +1,5 @@
-#function [xelem]=create_wrapped_elem(radc,ne)
-#
-# This function returns the new X position of the element around the cylinder:
-# radc = cylinder radius
-# ne = the number of elements
-#size = np.shape(xsample)
-#size(0) = dimension du premier element de xsample
+
+"""This function returns the new X position of the element around the cylinder"""
 
 import numpy as np
 import math

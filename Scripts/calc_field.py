@@ -1,3 +1,5 @@
+
+
 import numpy as np
 from scipy import math
 PI = np.pi
@@ -32,9 +34,9 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition):
         z_matrix[:, :, k] = axis_dict['Zmin'] + k*axis_dict['Zprec']
 
     """Declaring r and dl vectors for future Biot-Savart computation"""
-    r = np.zeros(3)  # , coil_definition))
+    r = np.zeros(3)
 
-    dl = np.zeros(3)  # , coil_definition))
+    dl = np.zeros(3)
 
     b1x_sum = np.zeros((x_len, y_len, z_len))
     b1y_sum = np.zeros((x_len, y_len, z_len))
@@ -44,7 +46,7 @@ def calc_field(arrays_list, axis_dict, nb_elem, coil_definition):
     ay_sum = np.zeros((x_len, y_len, z_len))
     az_sum = np.zeros((x_len, y_len, z_len))
 
-    # TODO Verify outputs by cmparing with MATLAB results
+    """Compute magnetic field"""
     for a in range(x_len):
         for b in range(y_len):
             for c in range(z_len):

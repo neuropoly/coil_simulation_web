@@ -1,6 +1,5 @@
-# function [SNR]=calc_SNR(B1,ne,R)
-#
-# This function computes the SNR
+
+"""This function computes the SNR"""
 
 import numpy as np
 import calc_R
