@@ -1,6 +1,25 @@
 # coil_simulation_web
 web version of program for simulating RF coil array for MRI
 
+# Getting started
+
+Make sure to have the right Python version (2.7)
+
+Make sure to install Python(x,y) in order to have the right libraries version for Numpy (1.9.2 or later) and MatPlotLib (1.4.3 or later)
+
+# Running the script
+
+In order to run the script in command line, you have to make sure to be in the Scripts directory of the repository and then enter the following command:
+
+" python coil_simulation.py -rada %VALUE% -radb %VALUE% -definition %VALUE% -o %FILENAME.png% -o1 %FILENAME.png% -orientation %1 or 2% -slice %VALUE% -preset %0 or 1% -r %VALUE% -c %VALUE% "
+
+Do not include the percentage symbol when entering the values.
+
+The description of each argument are available by entering the following command:
+
+"python coil_simulation.py -h"
+
+The results will be saved in the project root directory.
 
 # License
 
