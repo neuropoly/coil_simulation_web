@@ -141,7 +141,7 @@ arrays_list = []
 coils_list = []
 
 """Preset, number of coil according to lines and columns"""
-if preset == 1:
+if preset == 1 and rad_c == "0":
     rad_a *= 0.01
     rad_b *= 0.01
     d = 0.75 * 2 * rad_a
@@ -165,17 +165,43 @@ if preset == 1:
             coils_list.append(coil)
 
     """If preset on a cylinder"""
-    if rad_c != "0":
-        rad_c *= 0.01
-        for j in range(nb_elem):
-            coils_list[j].posinix = create_wrapped_elem(rad_c, int(nb_elem))[j]
+elif preset == 1 and rad_c != "0":
+    rad_c *= 0.01
+    rad_a *= 0.01
+    rad_b *= 0.01
+    d = 0.75 * 2 * rad_a
+    """60 deg = 1.0472 rad"""
+    pytha_x = np.cos(1.0472)
+    pytha_y = np.sin(1.0472)
+    d_x = d * pytha_x
+    d_y = d * pytha_y
+    nb_elem = int((c * r))
 
-        for coil in coils_list:
-            coil.rotation(rad_c)
+    for i in range(r):
+        if i % 2 == 0:
+            d_x = 0
+        else:
+            d_x = d * pytha_x
+        for j in range(c):
+            coil = Coil(0, (d_y * i), 0, rad_a, rad_b, coil_definition)
+            coils_list.append(coil)
 
-        for coil in coils_list:
-            coil_translated = coil.translation(rad_c)
-            coil.coil_array = coil_translated
+    i = 0
+    j = 0
+    for i in range(r):
+        if i % 2 == 0:
+            d_x = 0
+        else:
+            d_x = d * pytha_x
+        for j in range(c):
+            coils_list[j + i * c].posinix = create_wrapped_elem(rad_c, int(c))[j]
+
+    for coil in coils_list:
+        coil.rotation(rad_c)
+
+    for coil in coils_list:
+        coil_translated = coil.translation(rad_c)
+        coil.coil_array = coil_translated
 
     """Coils on a cylinder"""
 elif rad_c != "0":
@@ -187,7 +213,7 @@ elif rad_c != "0":
     """This block receives inputs from the user to define the coils and the axis system."""
     for i in range(int(nb_elem)):
         print "Coil #", i
-        pos_ini_x = input("Input initial X-axis position: ") * 0.01
+        pos_ini_x = 0 * 0.01
         pos_ini_y = input("Input initial Y-axis position: ") * 0.01
         pos_ini_z = input("Input initial Z-axis position: ") * 0.01
         coil = Coil(pos_ini_x, pos_ini_y, pos_ini_z, rad_a, rad_b, coil_definition)
@@ -284,6 +310,10 @@ if orientation == 2:
 # SNR = calc_SNR(B1_tmp, nb_elem, R, axis_dict)
 
 """MatPlotLib calls to display the coils in 3-D"""
+
+sys.stdout.write("\r%d%%" % 100)
+sys.stdout.flush()
+
 plot_planar_array(nb_elem, arrays_list, coil_definition, o1)
 
 image_slice_B1(B1f, axis_dict, o)
