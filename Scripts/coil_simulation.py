@@ -89,14 +89,6 @@ def get_parser():
                       example="5",
                       default_value='0')
 
-    parser.usage.addSection('Material definitions:')
-    parser.add_option(name="-m",
-                      type_value="material",
-                      description="Material to be analyzed (phantom)",
-                      mandatory=False,
-                      example="water",
-                      default_value="water")
-
     parser.usage.addSection('Preset definitions:')
     parser.add_option(name="-preset",
                       type_value="int",
@@ -118,6 +110,14 @@ def get_parser():
                       mandatory=True,
                       example="1",
                       default_value="1")
+
+    # parser.usage.addSection('Material definitions:')
+    # parser.add_option(name="-m",
+    #                   type_value="material",
+    #                   description="Material to be analyzed (phantom)",
+    #                   mandatory=False,
+    #                   example="water",
+    #                   default_value="water")
 
     return parser
 
