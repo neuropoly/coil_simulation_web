@@ -14,6 +14,9 @@ In order to run the script in command line, you have to make sure to be in the `
 python coil_simulation.py -rada 5 -radb 4 -definition 20 -o b1.png -o1 coil.png -orientation 1 -slice 0 -preset 1 -r 3 -c 5
 ~~~
 
+![alt tag](https://github.com/neuropoly/coil_simulation_web/blob/master/doc/results.png)
+
+
 The description of each argument are available by entering the following command:
 
 ~~~
