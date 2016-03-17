@@ -1,6 +1,6 @@
-# coil_simulation_web
+# MRI Coil Simulation
 
-Program for simulating RF coil array for MRI.
+Program for simulating RF coil array for MRI. Allows simple geometries such as planar array and cylindrical array. Uses Biot-Savart law and sum of square combination of coils for computing SNR.
 
 # Dependencies
 - Python (2.7)
@@ -14,8 +14,8 @@ In order to run the script in command line, you have to make sure to be in the `
 python coil_simulation.py -rada 5 -radb 4 -definition 20 -o b1.png -o1 coil.png -orientation 1 -slice 0 -preset 1 -r 3 -c 5
 ~~~
 
-The description of each argument are available by entering the following command:
 
+For help, type:
 ~~~
 python coil_simulation.py -h
 ~~~
