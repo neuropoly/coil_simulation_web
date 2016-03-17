@@ -1,13 +1,13 @@
 # coil_simulation_web
-web version of program for simulating RF coil array for MRI
+
+Program for simulating RF coil array for MRI.
+
+# Dependencies
+- Python (2.7)
+- Numpy (1.9.2 or later)
+- MatPlotLib (1.4.3 or later)
 
 # Getting started
-
-Make sure to have the right Python version (2.7)
-
-Make sure to install Python(x,y) in order to have the right libraries version for Numpy (1.9.2 or later) and MatPlotLib (1.4.3 or later)
-
-# Running the script
 
 In order to run the script in command line, you have to make sure to be in the ``Scripts/`` folder of the repository. Example command below:
 ~~~
